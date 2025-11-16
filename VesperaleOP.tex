@@ -1,0 +1,57 @@
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8
+
+\documentclass[10pt, twoside, french, openany]{book}
+\input{headers}
+\externaldocument[M-]{\subfix{VesperaleOP}}
+
+\begin{document}
+
+%\customsubfile{vop01_prooemium}
+%\customsubfile{vop03_tempus_adventus}
+%\customsubfile{vop05_tempus_nativitatis}
+%\customsubfile{vop07_tempus_quadragesimae}
+%\customsubfile{vop09_tempus_paschale}
+%\customsubfile{vop10_tempus_pentecosten}
+%\customsubfile{vop13_ordinarium}
+\customsubfile{vop15_psalterium}
+%\customsubfile{vop17_psalterium_tp}
+%\customsubfile{vop21_commune_bmv}
+%\customsubfile{vop23_commune_dedicationis}
+%\customsubfile{vop25_commune_apostolorum}
+%\customsubfile{vop27_commune_martyrum}
+%\customsubfile{vop29_commune_confessorum}
+%\customsubfile{vop31_commune_virginum}
+%\customsubfile{vop33_communia_tp}
+%\customsubfile{vop35_bmv_sabbato
+%\customsubfile{vop37_officium_defunctorum}
+%\customsubfile{vop40_festa_mobilia}
+%\customsubfile{vop50_sanctorale_decembris}
+%\customsubfile{vop51_sanctorale_januarii}
+%\customsubfile{vop52_sanctorale_februarii}
+%\customsubfile{vop53_sanctorale_martii}
+%\customsubfile{vop54_sanctorale_aprilis}
+%\customsubfile{vop55_sanctorale_maii}
+%\customsubfile{vop56_sanctorale_junii}
+%\customsubfile{vop57_sanctorale_julii}
+%\customsubfile{vop58_sanctorale_augusti}
+%\customsubfile{vop59_sanctorale_septembris}
+%\customsubfile{vop60_sanctorale_octobris}
+%\customsubfile{vop61_sanctorale_novembris}
+
+%% définition du style de la section d'index
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Index}
+\setheader{Index}
+\pagestyle{fancy}
+\thispagestyle{empty}
+%% impression des index
+\printindex[A] % antiennes
+\printindex[H] % hymnes
+\printindex[R] % répons
+\printindex[F] % fêtes
+
+\cleardoublepage % on avance jusqu'à la première page de droite
+\tableofcontents % table des matières
+
+\end{document}
