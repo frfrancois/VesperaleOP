@@ -1,0 +1,303 @@
+%%%%%%%%%%%%%%% INDEX %%%%%%%%%%%%%%%
+
+\usepackage{imakeidx}
+
+%%%%% Code magique pour faire marcher dotted_mode.ist
+%% D'après https://tex.stackexchange.com/questions/594568/how-to-integrate-a-tabular-environment-in-the-index
+\setlength{\columnseprule}{0.4pt}
+\newsavebox\ltmcbox
+\newlength\mysavecolroom
+%% Utilisé dans les fichiers .ist afin d'ignorer automatiquement 
+%% les instances de \\ dans les index qui emploient longtable, ce qui casserait la table.
+\newcommand{\ignoreNL}[1]{} 
+%% Macro à employer pour effectuer des sauts de lignes dans les noms indexés si ce nom est indexé avec longtable (p.ex. dotted_mode.ist)
+\newcommand{\idxnewline}{\newline\null\hspace{4mm}}
+%%%%% Fin du code magique
+
+%% Définition des index 
+\indexsetup{level=\section*,toclevel=section,noclearpage,othercode=\footnotesize\thispagestyle{empty}}
+\makeindex[name=A,title=Antiphonæ, columns=2,columnseprule, options=-s dotted_mode.ist]
+\makeindex[name=H,title=Hymni, columns=2,columnseprule, options=-s dotted_mode.ist]
+\makeindex[name=R,title=Responsoria, columns=2,columnseprule, options=-s dotted.ist]
+\makeindex[name=F,title=Festa, columns=2,columnseprule, options=-s dotted.ist]
+
+%%%%%%%%%%%%%%% GÉOMÉTRIE %%%%%%%%%%%%%%%
+
+%KDP 6inx9in sans fonds perdus
+\usepackage[paperwidth=6in, paperheight=9in]{geometry}
+
+\geometry{
+inner=25mm,
+outer=14mm,
+top=14mm,
+bottom=14mm,
+headsep=3mm,
+}
+
+%%%%%%%%%%%%%%% PACKAGES STANDARD %%%%%%%%%%%%%%%
+
+\usepackage{fontspec}
+\usepackage[nolocalmarks]{polyglossia}
+%% utiliser la typographie francaise est une bonne idée même pour le latin (l'option latin existe mais marche moins bien)
+\setdefaultlanguage[variant=french, frenchitemlabels=false]{french}
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{expl3}
+\usepackage{hyperref}
+\usepackage{refcount}
+\usepackage{needspace}
+\usepackage{etoolbox}
+\usepackage{enumitem}
+\usepackage{lettrine}
+\usepackage{longtable}
+\usepackage{luacode}
+\usepackage{paracol}
+\usepackage{alltt}
+
+%%%%%%%%%%%%%%% POLICES DE CARACTÈRES %%%%%%%%%%%%%%%
+\setmainfont[Ligatures=TeX]{Charis} % changer pour changer la police
+\setstretch{1.05} % changer pour augmenter ou diminuer l'interligne
+
+%%%%%%%%%%%%%%% CONFIGURATION GREGORIO %%%%%%%%%%%%%%%
+
+\usepackage[forcecompile]{gregoriotex}
+
+%% Variable globale contenant le nom de fichier de la pièce en train d'être imprimée, qui est aussi son label pour référence interne
+\newcommand{\labelbuffer}{}
+%% Variable globale contenant le nom de l'index (A, H, R) pertinent pour la pièce en train d'être imprimée, s'il y en a un
+\newcommand{\indexnamebuffer}{}
+%% Variable globale contenant le mode (+ differentia si antienne) de la pièce en train d'être imprimée, pour l'imprimer en annotation
+\newcommand{\annotationmode}{}
+%% Variable globale contenant le mode (+ parfois differentia si un mode a plusieurs pointages) pour déterminer le prochain psaume pointé.
+\newcommand{\nextpsalmmode}{}
+%% Variable globale contenant le mode de la pièce en train d'être imprimée, pour l'ajouter à son entrée d'index.
+\newcommand{\indexedmode}{}
+
+%%%% Code magique pour définir \grenewcommand, qui fait la même chose que \renewcommand mais avec un effet global
+\makeatletter
+\def\gnewcommand{\g@star@or@long\new@command}
+\def\grenewcommand{\g@star@or@long\renew@command}
+\def\g@star@or@long#1{% 
+  \@ifstar{\let\l@ngrel@x\global#1}{\def\l@ngrel@x{\long\global}#1}}
+\makeatother
+%%%% fin du code magique
+
+%% Cette section prend un header office-part (Antiphona, etc.) détermine son index
+\newcommand{\abbrev}[3]{%
+  \ifstrequal{#1}{#2}{%
+	\grenewcommand{\indexnamebuffer}{#3}%
+  }%
+  {}%
+}
+\newcommand{\officepartannotation}[1]{%
+  \grenewcommand{\indexnamebuffer}{}%
+  \abbrev{#1}{Antiphona}{A}%
+  \abbrev{#1}{Hymnus}{H}%
+  \abbrev{#1}{Responsorium breve}{R}%
+}
+
+%% Cette section prend un header mode (1a...), annote la pièce avec ce mode, 
+%% et en prend note dans \nextpsalmmode pour aller chercher le bon psaume après
+\newcommand{\changemode}[5]{%
+  \ifstrequal{#1}{#2}{%
+	\grenewcommand{\nextpsalmmode}{#3}%
+	\grenewcommand{\annotationmode}{#4}%
+	\grenewcommand{\indexedmode}{#5}%
+  }%
+  {}%
+}
+\newcommand{\modeannotation}[1]{
+  % 1e colonne: champ mode du GABC
+  % 2e colonne: mode de pointage du psaume
+  % 3e colonne: mode imprimé au-dessus de l'initiale
+  % 4e colonne: mode imprimé dans l'entrée d'index
+  \grenewcommand{\annotationmode}{#1}
+  \grenewcommand{\nextpsalmmode}{#1}
+  \changemode{#1}{1a}{1}{Ia}{1}
+  \changemode{#1}{1b}{1}{Ib}{1}
+  \changemode{#1}{1c}{1}{Ic}{1}
+  \changemode{#1}{1}{1}{I}{1}
+  \changemode{#1}{2}{2}{II}{2}
+  \changemode{#1}{3a}{3}{IIIa}{3}
+  \changemode{#1}{3b}{3}{IIIb}{3}
+  \changemode{#1}{3c}{3}{IIIc}{3}
+  \changemode{#1}{3}{3}{III}{3}
+  \changemode{#1}{4a}{4}{IVa}{4}
+  \changemode{#1}{4b}{4}{IVb}{4}
+  \changemode{#1}{4c}{4c}{IVc}{4}
+  \changemode{#1}{4}{4}{IV}{4}
+  \changemode{#1}{5}{5}{V}{5}
+  \changemode{#1}{6}{6}{VI}{6}
+  \changemode{#1}{7a}{7}{VIIa}{7}
+  \changemode{#1}{7b}{7}{VIIb}{7}
+  \changemode{#1}{7c}{7}{VIIc}{7}
+  \changemode{#1}{7}{7}{VII}{7}
+  \changemode{#1}{8a}{8}{VIIIa}{8}
+  \changemode{#1}{8b}{8}{VIIIb}{8}
+  \changemode{#1}{8}{8}{VIII}{8}
+  \changemode{#1}{Per.}{per}{Per.}{P}
+  \greannotation{\annotationmode}
+}
+
+%% Cette section prend un header name (le nom de la pièce),
+%% assigne son label (le nom de fichier) à la pièce, et un nom au label (le nom de la pièce),
+%% et indexe la pièce selon son office-part et son mode
+\begin{luacode*}
+function delete_newline ( s )
+   s = string.gsub ( s, 'newline', '')
+   s = string.gsub ( s, 'hspace', '')
+   s = string.gsub ( s, '4mm', '')
+   s = string.gsub ( s, 'protect', '')
+   s = string.gsub ( s, 'hbox', '')
+   s = string.gsub ( s, [[\]], '')
+   s = string.gsub ( s, "{}", '')
+   tex.sprint ( s )
+end
+\end{luacode*}
+\makeatletter
+\newcommand{\namecapture}[1]{%
+  %% this prevents page breaks between the phantom section and its label, and the actual score.
+  \needspace{4\baselineskip}%
+  \protected@edef\@currentlabelname{\directlua{delete_newline(\luastring{#1})}}%
+  \phantomsection%
+  \label{\labelbuffer}%
+  %% indexation
+  \ifdefstrequal{H}{\indexnamebuffer}{%
+    \index[\indexnamebuffer]{{#1}@\indexedmode & #1}%
+  }{}%
+  \ifdefstrequal{A}{\indexnamebuffer}{%
+    \index[\indexnamebuffer]{{#1}@\indexedmode & #1}%
+  }{}%
+  \ifdefstrequal{R}{\indexnamebuffer}{%
+    \index[\indexnamebuffer]{#1}%
+  }{}%
+}
+\makeatother
+
+\gresetheadercapture{office-part}{officepartannotation}{}
+\gresetheadercapture{mode}{modeannotation}{string}
+\gresetheadercapture{name}{namecapture}{}
+
+\newcommand{\cantusparvus}[1]{
+  \gresetinitiallines{0}
+  \gregorioscore{gabc/#1}
+  \gresetinitiallines{1}
+}
+
+\newcommand{\cantus}[3][]{
+  %% #1 (optionnel) : l'annotation à faire figurer à la place du mode
+  %% #2 : le nom de fichier (sans .gabc) qui sera la référence de la pièce
+  %% #3 : l'annotation à faire figurer au-dessus du mode
+  \renewcommand{\labelbuffer}{#2}
+  \greannotation{#3}
+  \gregorioscore{gabc/#2}
+}
+
+%%%%%%%%%%%%%%% COLUMN MANAGEMENT %%%%%%%%%%%%%%%
+
+%% Commande pour s'autoriser à avoir de l'espace horizontal entre
+%% les mots au-delà des standards normalement acceptables
+\sloppy
+
+%% Commande pour imprimer une liste itémisée (psaumes, cantiques)
+\newcommand{\twocolitemized}[2][]{
+	%% #1 (optionnel) : titre à imprimer en en-tête
+	%% #2 : fichier itémisé à imprimer sur deux colonnes
+	\begin{multicols}{2}%
+	\begin{center}
+	#1
+	\end{center}
+	\begin{itemize}[
+		label=\null, 
+		leftmargin=0pt, 
+		itemindent=5pt, 
+		labelsep=0pt, 
+		labelwidth=0pt, 
+		rightmargin=0pt, 
+		parsep=0pt, 
+		itemsep=0pt plus 1pt]
+	\input{#2}%
+	\end{itemize}%
+	\end{multicols}%
+}
+
+\newcommand{\psalmus}[2][\nextpsalmmode]{
+	%% #1 (optionnel): ton du psaume si différent de \nextpsalmmode
+	%% #2: numéro du psaume
+	\phantomsection
+	\label{Psalmus#2_#1}
+	%\index[P]{#2 (tonus #1)} %% seulement si on indexe les psaumes
+	\twocolitemized[\textbf{Psalmus #2}]{psalmi/#2_#1}
+}
+
+\newcommand{\canticum}[4][\nextpsalmmode]{
+	%% #1 (optionnel): ton du cantique si différent de \nextpsalmmode
+	%% #2: nom de fichier du cantique
+	%% #3: titre du cantique tel qu'imprimé
+	%% #4: référence biblique
+	\phantomsection
+	\label{Canticum#2_#1}
+	%\index[C]{#2 (tonus #1)} %% seulement si on indexe les cantiques
+	\twocolitemized[\textbf{#3}\\\rubric{#4}]{psalmi/#2_#1}
+}
+
+%%%%%%%%%%%%%%% EN-TÊTES DE PAGES %%%%%%%%%%%%%%%
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{1pt}
+\setlength{\headheight}{20pt}
+\newcommand{\themark}{}
+\fancyhead[RO, LE]{\thepage}
+\fancyhead[CO, CE]{\themark}
+
+% this command is called every time the left and right header texts are set (e.g. by calling \feast)
+% the hyphenpenalty override is neede only on older versions of gregorio which do not reset it correctly after typesetting the score.
+% see https://tex.stackexchange.com/questions/581013/lualatex-hyphenation-issue-in-fancyhdr-with-gregoriotex-and-multicols-latin-te
+\newcommand{\setheader}[1]{
+%	\renewcommand{\themark}{\hyphenpenalty=50{\sc#1}}
+%	\renewcommand{\themark}{{\sc#1}}
+}
+
+%%%%%%%%%%%%%%% STYLES %%%%%%%%%%%%%%%
+
+%% No indentation of paragraphs
+\setlength{\parindent}{0mm}
+
+%% Macro to print rubrics that inaugurate a section of more rubrics (in red, normal font, centered)
+%\newcommand{\titlerubric}[1]{{\centering{}\textcolor{gregoriocolor}{#1}\par}}
+
+%% Macro to print the name of a score in normal characters inside a \rubric
+\newcommand{\normaltext}[1]{{\normalfont\normalcolor #1}}
+\newcommand{\scorename}[1]{\normaltext{\nameref{M-#1}}}
+
+%% Macros to print preparatory and accented syllables in psalms
+\newcommand{\sylac}[1]{\textbf{#1}}
+\newcommand{\sylprep}[1]{\textit{#1}}
+
+\newcommand{\sylchange}[1]{\textbf{#1}}
+\newcommand{\sylpass}[1]{\textit{#1}}
+
+\input{macros}
+
+
+\newcommand{\festum}[5]{
+	\begin{center}
+	\ifstrequal{#1}{}{}{\Large #1\\}
+	{\Huge #2}\\
+	{\Large #3}
+	\setheader{#4}
+	\end{center}
+}
+
+%%%%%%%%%%%%%%% SUBFILES %%%%%%%%%%%%%%%
+
+\usepackage{xr}
+\usepackage{subfiles}
+
+%% When we start a new subfile (new chapter), 
+%% we start on a new page (with blank filling on the previous page) and create a corresponding label.
+\newcommand{\customsubfile}[1]{\newpage\label{#1}\thispagestyle{empty}\subfile{#1}}
