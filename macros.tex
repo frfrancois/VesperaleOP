@@ -6,8 +6,8 @@
 \gresetspecial{A/}{\textcolor{gregoriocolor}{\fontspec{Charis}\Abar.~}}
 \gresetspecial{+}{{\fontspec{FreeSerif}†~}}
 \gresetspecial{*}{\gresixstar}
-\gresetspecial{cross}{\textcolor{gregoriocolor}{\fontspec{FreeSerif}\symbol{"2720}}}
-\gresetspecial{labiacross}{\textcolor{gregoriocolor}{+}}
+\gresetspecial{crux}{\textcolor{gregoriocolor}{\fontspec{FreeSerif}\symbol{"2720}}}
+\gresetspecial{lcrux}{\textcolor{gregoriocolor}{+}}
 %% Les mêmes, pour usage dans LaTeX (\vv \rr \aa \cc \psstar \pscross), pour usage dans le texte et les psaumes
 \newcommand{\specialcharhsep}{3mm} % space after invoking R/ or V/ or A/ outside rubrics
 \newcommand{\vv}{\textcolor{gregoriocolor}{\fontspec{Charis}℣.\nolinebreak[4]\hspace{\specialcharhsep}\nolinebreak[4]}}
@@ -34,6 +34,9 @@
 
 %% Rubriques employées comme titre d'une pièce ("per annum" centré)
 \newcommand{\titulumrubrica}[1]{\begin{center}\textbf{#1}\end{center}}
+
+%% Petit titre intermédiaire
+\newcommand{\titulum}[1]{\begin{center}\textbf{#1}\end{center}}
 
 %%%%%%%%%%%%%%% COMMON RUBRICS %%%%%%%%%%%%%%%
 
