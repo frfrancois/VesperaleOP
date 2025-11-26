@@ -287,12 +287,29 @@ end
 \newcommand{\festum}[5]{
 	%% pré-titre, titre, sous-titre
 	\begin{center}
-	\ifstrequal{#1}{}{}{\Large \textsc{#1}\par}
-	{\Huge \textsc{#2}}\par
-	{\Large \textsc{#3}}\par
+	\ifstrequal{#5}{0}{
+		\ifstrequal{#1}{}{}{\huge \textsc{#1}\par}
+		{\Huge \textsc{#2}}\par
+		{\huge \textsc{#3}}\par
+	}{}
+	\ifstrequal{#5}{1}{
+		\ifstrequal{#1}{}{}{\Large \textsc{#1}\par}
+		{\huge \textsc{#2}}\par
+		{\Large \textsc{#3}}\par
+	}{}
+	\ifstrequal{#5}{2}{
+		\ifstrequal{#1}{}{}{\large \textsc{#1}\par}
+		{\LARGE \textsc{#2}}\par
+		{\large \textsc{#3}}\par
+	}{}
+	\ifstrequal{#5}{3}{
+		\ifstrequal{#1}{}{}{\normalsize \textsc{#1}\par}
+		{\Large \textsc{#2}}\par
+		{\normalsize \textsc{#3}}\par
+	}{}
+	\end{center}
 	%% définition de l'en-tête de page
 	\setheader{#4}
-	\end{center}
 }
 
 %%%%%%%%%%%%%%% SUBFILES %%%%%%%%%%%%%%%
