@@ -140,6 +140,12 @@ imprime le petit titre "Oratio" et le texte de l'oraison.
 
 imprime le petit titre "Capitulum", la référence biblique "ref" (dessous, ou alignée à droite sur la même ligne comme Gillet le fait parfois), et le texte du capitule (on peut pointer le capitule et les oraisons avec le même système que les psaumes, sylprep sylac psstar pscross, si on fait un livre "pour les nuls"!)
 
+### Séparateurs
+
+`\lineamagna{}` trace une ligne horizonale à travers la page
+
+`\lineaparva{}` trace une ligne horizonale centrée de quelques centimètres de large
+
 ### Raccourcis d'écriture
 
 `\vvrub`, `\rrrub` et `\aarub` sont à employer à l'intérieur de rubriques et impriment les caractères V barré, R barré, A barré, en adoptant la couleur de la rubrique.
