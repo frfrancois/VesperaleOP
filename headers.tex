@@ -254,12 +254,12 @@ end
 \fancyhead[RO, LE]{\thepage}
 \fancyhead[CO, CE]{\themark}
 
-% this command is called every time the left and right header texts are set (e.g. by calling \feast)
+% this command is called every time the left and right header texts are set (e.g. by calling \festum)
 % the hyphenpenalty override is neede only on older versions of gregorio which do not reset it correctly after typesetting the score.
 % see https://tex.stackexchange.com/questions/581013/lualatex-hyphenation-issue-in-fancyhdr-with-gregoriotex-and-multicols-latin-te
 \newcommand{\setheader}[1]{
-%	\renewcommand{\themark}{\hyphenpenalty=50{\sc#1}}
-%	\renewcommand{\themark}{{\sc#1}}
+	\grenewcommand{\themark}{\hyphenpenalty=50{\sc#1}}
+	\grenewcommand{\themark}{{\sc#1}}
 }
 
 %%%%%%%%%%%%%%% STYLES %%%%%%%%%%%%%%%
@@ -285,10 +285,12 @@ end
 
 
 \newcommand{\festum}[5]{
+	%% pré-titre, titre, sous-titre
 	\begin{center}
-	\ifstrequal{#1}{}{}{\Large #1\\}
-	{\Huge #2}\\
-	{\Large #3}
+	\ifstrequal{#1}{}{}{\Large \textsc{#1}\par}
+	{\Huge \textsc{#2}}\par
+	{\Large \textsc{#3}}\par
+	%% définition de l'en-tête de page
 	\setheader{#4}
 	\end{center}
 }
