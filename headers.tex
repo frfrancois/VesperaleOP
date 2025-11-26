@@ -18,7 +18,7 @@
 \indexsetup{level=\section*,toclevel=section,noclearpage,othercode=\footnotesize\thispagestyle{empty}}
 \makeindex[name=A,title=Antiphonæ, columns=2,columnseprule, options=-s dotted_mode.ist]
 \makeindex[name=H,title=Hymni, columns=2,columnseprule, options=-s dotted_mode.ist]
-\makeindex[name=R,title=Responsoria, columns=2,columnseprule, options=-s dotted.ist]
+\makeindex[name=R,title=Responsoria, columns=2,columnseprule, options=-s dotted_mode.ist]
 \makeindex[name=F,title=Festa, columns=2,columnseprule, options=-s dotted.ist]
 
 %%%%%%%%%%%%%%% GÉOMÉTRIE %%%%%%%%%%%%%%%
@@ -68,6 +68,8 @@ headsep=3mm,
 \newcommand{\labelbuffer}{}
 %% Variable globale contenant le nom de l'index (A, H, R) pertinent pour la pièce en train d'être imprimée, s'il y en a un
 \newcommand{\indexnamebuffer}{}
+%% Variable globale contenant le nom de la pièce (tel qu'indiqué dans l'en-tête name:) en train d'être imprimée
+\newcommand{\namebuffer}{}
 %% Variable globale contenant le mode (+ differentia si antienne) de la pièce en train d'être imprimée, pour l'imprimer en annotation
 \newcommand{\annotationmode}{}
 %% Variable globale contenant le mode (+ parfois differentia si un mode a plusieurs pointages) pour déterminer le prochain psaume pointé.
@@ -96,10 +98,13 @@ headsep=3mm,
   \abbrev{#1}{Antiphona}{A}%
   \abbrev{#1}{Hymnus}{H}%
   \abbrev{#1}{Responsorium breve}{R}%
+  \abbrev{#1}{Responsorium}{R}%
 }
 
 %% Cette section prend un header mode (1a...), annote la pièce avec ce mode, 
-%% et en prend note dans \nextpsalmmode pour aller chercher le bon psaume après
+%% et en prend note dans \nextpsalmmode pour aller chercher le bon psaume après.
+%% étant la dernière section exécutée immédiatement avant l'impression de la pièce (car dernier header dans l'ordre),
+%% elle porte également l'indexation avec le nom, le mode et l'index identifiés.
 \newcommand{\changemode}[5]{%
   \ifstrequal{#1}{#2}{%
 	\grenewcommand{\nextpsalmmode}{#3}%
@@ -139,11 +144,21 @@ headsep=3mm,
   \changemode{#1}{8}{8}{VIII}{8}
   \changemode{#1}{Per.}{per}{Per.}{P}
   \greannotation{\annotationmode}
+  %% indexation
+  \ifstrequal{H}\expandafter{\indexnamebuffer}{%
+    \index[\indexnamebuffer]{{\namebuffer}@\indexedmode & \namebuffer}%
+  }{}%
+  \ifstrequal{A}\expandafter{\indexnamebuffer}{%
+    \index[\indexnamebuffer]{{\namebuffer}@\indexedmode & \namebuffer}%
+  }{}%
+  \ifstrequal{R}\expandafter{\indexnamebuffer}{%
+    \index[\indexnamebuffer]{{\namebuffer}@\indexedmode & \namebuffer}%
+  }{}%
 }
 
 %% Cette section prend un header name (le nom de la pièce),
 %% assigne son label (le nom de fichier) à la pièce, et un nom au label (le nom de la pièce),
-%% et indexe la pièce selon son office-part et son mode
+%% et mémorise le nom dans \namebuffer pour indexation future une fois qu'on a le mode.
 \begin{luacode*}
 function delete_newline ( s )
    s = string.gsub ( s, 'newline', '')
@@ -163,16 +178,7 @@ end
   \protected@edef\@currentlabelname{\directlua{delete_newline(\luastring{#1})}}%
   \phantomsection%
   \label{\labelbuffer}%
-  %% indexation
-  \ifdefstrequal{H}{\indexnamebuffer}{%
-    \index[\indexnamebuffer]{{#1}@\indexedmode & #1}%
-  }{}%
-  \ifdefstrequal{A}{\indexnamebuffer}{%
-    \index[\indexnamebuffer]{{#1}@\indexedmode & #1}%
-  }{}%
-  \ifdefstrequal{R}{\indexnamebuffer}{%
-    \index[\indexnamebuffer]{#1}%
-  }{}%
+  \grenewcommand{\namebuffer}{#1}
 }
 \makeatother
 
