@@ -260,9 +260,9 @@ end
 \fancyhead[RO, LE]{\thepage}
 \fancyhead[CO, CE]{\themark}
 
-% this command is called every time the left and right header texts are set (e.g. by calling \festum)
-% the hyphenpenalty override is neede only on older versions of gregorio which do not reset it correctly after typesetting the score.
-% see https://tex.stackexchange.com/questions/581013/lualatex-hyphenation-issue-in-fancyhdr-with-gregoriotex-and-multicols-latin-te
+% cette commande est appelée pour définir l'en-tête de page (p.ex. en appelant \festum)
+% la surcharge de \hyphenpenalty est nécessaire sur certaines anciennes versions de gregorio
+% voir https://tex.stackexchange.com/questions/581013/lualatex-hyphenation-issue-in-fancyhdr-with-gregoriotex-and-multicols-latin-te
 \newcommand{\setheader}[1]{
 	\grenewcommand{\themark}{\hyphenpenalty=50{\sc#1}}
 	\grenewcommand{\themark}{{\sc#1}}
@@ -270,11 +270,8 @@ end
 
 %%%%%%%%%%%%%%% STYLES %%%%%%%%%%%%%%%
 
-%% No indentation of paragraphs
+%% Pas d'indentation des paragraphes
 \setlength{\parindent}{0mm}
-
-%% Macro to print rubrics that inaugurate a section of more rubrics (in red, normal font, centered)
-%\newcommand{\titlerubric}[1]{{\centering{}\textcolor{gregoriocolor}{#1}\par}}
 
 %% Macro to print the name of a score in normal characters inside a \rubric
 \newcommand{\normaltext}[1]{{\normalfont\normalcolor #1}}
@@ -288,7 +285,6 @@ end
 \newcommand{\sylpass}[1]{\textit{#1}}
 
 \input{macros}
-
 
 \newcommand{\festum}[5]{
 	%% pré-titre, titre, sous-titre
@@ -316,6 +312,8 @@ end
 	\end{center}
 	%% définition de l'en-tête de page
 	\setheader{#4}
+	%% si une date est indiquée, on indexe
+	%\ifstrequal{#1}{}{}{\index[F]{#2}} %% pas beau: rajouter un argument pour le nom indexé de la fête, ou déduire ce nom en coupant S. devant
 }
 
 %%%%%%%%%%%%%%% SUBFILES %%%%%%%%%%%%%%%

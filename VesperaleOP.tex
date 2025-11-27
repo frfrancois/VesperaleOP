@@ -52,6 +52,8 @@
 \printindex[F] % fêtes
 
 \cleardoublepage % on avance jusqu'à la première page de droite
-\tableofcontents % table des matières
+%% On donne son titre à la table des matières principale
+\renewcommand{\contentsname}{\textsc{Index generalis}}
+\tableofcontents % on imprime la table des matières
 
 \end{document}
