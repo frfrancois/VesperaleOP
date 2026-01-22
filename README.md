@@ -25,7 +25,7 @@ La deuxième partie du code désigne le genre de la pièce et son rang dans l'of
 
 ### Structure de l'ouvrage
 
-Il n'est pas nécessaire que la numérotation des fichiers `vop<numéro>_<partie>.tex` soit continue, il est utile qu'elle soit ordonné, de sorte que les fichiers s'affichent (dans un explorateur de fichiers) dans l'ordre de l'ouvrage.
+Il n'est pas nécessaire que la numérotation des fichiers `vop<numéro>_<partie>.tex` soit continue, il est utile qu'elle soit ordonnée, de sorte que les fichiers s'affichent (dans un explorateur de fichiers) dans l'ordre de l'ouvrage.
 
 ## Conventions GABC
 
@@ -33,13 +33,13 @@ Il n'est pas nécessaire que la numérotation des fichiers `vop<numéro>_<partie
 
 Dans le code GABC, il n'est pas rare de devoir insérer divers caractères spéciaux.
 
-*`<sp>V/</sp>` : Symbole verset suivi d'un point (en conséquence, ne pas ajouter soi-même le point)
-*`<sp>R/</sp>` : Symbole répons suivi d'un point
-*`<sp>A/</sp>` : Symbole antienne suivi d'un point
-*`<sp>*</sp>` : Astérisque d'incipit
-*`<sp>+</sp>` : Obèle (croix fine à branche inférieure longue, pour les renvois)
-*`<sp>crux</sp>` : Croix pattée indiquant les signes de croix de l'épaule à l'épaule
-*`<sp>lcrux</sp>` : Croix latine indiquant les signes de croix sur une partie du corps
+* `<sp>V/</sp>` : Symbole verset suivi d'un point (en conséquence, ne pas ajouter soi-même le point)
+* `<sp>R/</sp>` : Symbole répons suivi d'un point
+* `<sp>A/</sp>` : Symbole antienne suivi d'un point
+* `<sp>*</sp>` : Astérisque d'incipit
+* `<sp>+</sp>` : Obèle (croix fine à branche inférieure longue, pour les renvois)
+* `<sp>crux</sp>` : Croix pattée indiquant les signes de croix de l'épaule à l'épaule
+* `<sp>lcrux</sp>` : Croix latine indiquant les signes de croix sur une partie du corps
 
 ### En-têtes
 
