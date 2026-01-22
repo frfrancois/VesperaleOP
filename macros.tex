@@ -55,6 +55,32 @@
 %% Petit titre intermédiaire
 \newcommand{\titulum}[1]{\begin{center}\textbf{#1}\end{center}}
 
+%% Oraison
+\newcommand{\oratio}[1]{%
+	%% #1 : texte de l'oraison, avec \psstar et \pscross pour les astérisques et obèles
+	\begin{multicols}{2}%
+	\begin{center}
+	\textbf{Oratio}
+	\end{center}
+	Orémus.\\
+	#1\\
+	\rr Amen.
+	\end{multicols}%
+}
+
+%% Capitule
+\newcommand{\capitulum}[2]{%
+	%% #1 : référence biblique
+	%% #2 : texte du capitule, avec \psstar et \pscross pour les astérisques et obèles
+	\begin{multicols}{2}%
+	\begin{center}
+	\textbf{Capitulum} \rubrica{#1}
+	\end{center}
+	#2\\
+	\rr Deo grátias.
+	\end{multicols}%
+}
+
 %%%%%%%%%%%%%%% COMMON RUBRICS %%%%%%%%%%%%%%%
 
 \newcommand{\dominexaudiversiculus}{%
