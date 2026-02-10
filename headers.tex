@@ -323,6 +323,11 @@ end
 	%\ifstrequal{#1}{}{}{\index[F]{#2}} %% pas beau: rajouter un argument pour le nom indexé de la fête, ou déduire ce nom en coupant S. devant
 }
 
+%% Magie profonde pour pouvoir insérer \drop devant un paragraphe, et que cela insère une lettrine.
+\def\drop #1#2 {% note the space before {
+  \lettrine{#1}{#2} % a trailing space
+}
+
 %%%%%%%%%%%%%%% SUBFILES %%%%%%%%%%%%%%%
 
 \usepackage{xr}

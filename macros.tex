@@ -58,27 +58,20 @@
 %% Oraison
 \newcommand{\oratio}[1]{%
 	%% #1 : texte de l'oraison, avec \psstar et \pscross pour les astérisques et obèles
-	\begin{multicols}{2}%
 	\begin{center}
 	\textbf{Oratio}
 	\end{center}
-	Orémus.\\
-	#1\\
-	\rr Amen.
-	\end{multicols}%
+	\drop #1
 }
 
 %% Capitule
 \newcommand{\capitulum}[2]{%
 	%% #1 : référence biblique
 	%% #2 : texte du capitule, avec \psstar et \pscross pour les astérisques et obèles
-	\begin{multicols}{2}%
 	\begin{center}
 	\textbf{Capitulum} \rubrica{#1}
 	\end{center}
-	#2\\
-	\rr Deo grátias.
-	\end{multicols}%
+	\drop #2
 }
 
 %%%%%%%%%%%%%%% COMMON RUBRICS %%%%%%%%%%%%%%%
