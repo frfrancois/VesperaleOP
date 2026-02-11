@@ -210,11 +210,14 @@ end
 %% les mots au-delà des standards normalement acceptables
 \sloppy
 
+%% Environnement psalmodia qui encadre tous les psaumes imprimés sur deux colonnes.
+%% Pour le moment, ne prend pas d'argument, et se contente de passer la mise en page sur deux colonnes.
+\newenvironment{psalmodia}{\begin{multicols}{2}}{\end{multicols}}
+
 %% Commande pour imprimer une liste itémisée (psaumes, cantiques)
-\newcommand{\twocolitemized}[2][]{
+\newcommand{\itemizedlist}[2][]{
 	%% #1 (optionnel) : titre à imprimer en en-tête
 	%% #2 : fichier itémisé à imprimer sur deux colonnes
-	\begin{multicols}{2}%
 	\begin{center}
 	#1
 	\end{center}
@@ -229,19 +232,18 @@ end
 		itemsep=0pt plus 1pt]
 	\input{#2}%
 	\end{itemize}%
-	\end{multicols}%
 }
 
-\newcommand{\psalmus}[2][\nextpsalmmode]{
+\newcommand{\psalmusinpsalmodia}[2][\nextpsalmmode]{
 	%% #1 (optionnel): ton du psaume si différent de \nextpsalmmode
 	%% #2: numéro du psaume
 	\phantomsection
 	\label{Psalmus#2_#1}
 	%\index[P]{#2 (tonus #1)} %% seulement si on indexe les psaumes
-	\twocolitemized[\textbf{Psalmus #2}]{psalmi/#2_#1}
+	\itemizedlist[\textbf{Psalmus #2}]{psalmi/#2_#1}
 }
 
-\newcommand{\canticum}[4][\nextpsalmmode]{
+\newcommand{\canticuminpsalmodia}[4][\nextpsalmmode]{
 	%% #1 (optionnel): ton du cantique si différent de \nextpsalmmode
 	%% #2: nom de fichier du cantique
 	%% #3: titre du cantique tel qu'imprimé
@@ -249,8 +251,28 @@ end
 	\phantomsection
 	\label{Canticum#2_#1}
 	%\index[C]{#2 (tonus #1)} %% seulement si on indexe les cantiques
-	\twocolitemized[\textbf{#3}\\\rubric{#4}]{psalmi/#2_#1}
+	\itemizedlist[\textbf{#3}\\\rubric{#4}]{psalmi/#2_#1}
 }
+
+\newcommand{\psalmus}[2][\nextpsalmmode]{
+	%% #1 (optionnel): ton du psaume si différent de \nextpsalmmode
+	%% #2: numéro du psaume
+	\begin{psalmodia}%
+	\psalmusinpsalmodia[#1]{#2}
+	\end{psalmodia}%
+}
+
+\newcommand{\canticum}[4][\nextpsalmmode]{
+	%% #1 (optionnel): ton du cantique si différent de \nextpsalmmode
+	%% #2: nom de fichier du cantique
+	%% #3: titre du cantique tel qu'imprimé
+	%% #4: référence biblique
+	\begin{psalmodia}%
+	\canticuminpsalmodia[#1]{#2}{#3}{#4}
+	\end{psalmodia}%
+}
+
+
 
 %%%%%%%%%%%%%%% EN-TÊTES DE PAGES %%%%%%%%%%%%%%%
 
