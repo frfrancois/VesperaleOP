@@ -58,6 +58,7 @@
 %% Oraison
 \newcommand{\oratio}[1]{%
 	%% #1 : texte de l'oraison, avec \psstar et \pscross pour les astérisques et obèles
+	\needspace{3\baselineskip} % Pour assurer que le titre "Oratio" n'est pas seul en bas de page
 	\begin{center}
 	\textbf{Oratio}
 	\end{center}
@@ -68,6 +69,7 @@
 \newcommand{\capitulum}[2]{%
 	%% #1 : référence biblique
 	%% #2 : texte du capitule, avec \psstar et \pscross pour les astérisques et obèles
+	\needspace{3\baselineskip} % Pour assurer que le titre "Capitulum" n'est pas seul en bas de page
 	\begin{center}
 	\textbf{Capitulum} \rubrica{#1}
 	\end{center}
