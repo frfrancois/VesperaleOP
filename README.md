@@ -150,6 +150,8 @@ imprime le petit titre "Capitulum", la référence biblique "ref" (dessous, ou a
 
 `\vvrub`, `\rrrub` et `\aarub` sont à employer à l'intérieur de rubriques et impriment les caractères V barré, R barré, A barré, en adoptant la couleur de la rubrique.
 
+`\vvann`, `\rrann` et `\aaann` sont à employer comme annotations dans les arguments de la commande cantus, et impriment les caractères V barré, R barré, A barré, en noir et centrés.
+
 `\dominexaudiversiculus` imprime le V/&R/ Dómine exáudi...
 
 `\dominusvobiscumversiculus` imprime le V/&R/ Dóminus vobíscum...
