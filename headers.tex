@@ -209,9 +209,9 @@ end
 \newcommand{\itemizedlist}[2][]{
 	%% #1 (optionnel) : titre à imprimer en en-tête
 	%% #2 : fichier itémisé à imprimer sur deux colonnes
-	\begin{center}
-	#1
-	\end{center}
+	{\centering
+	#1\par
+	}
 	\begin{itemize}[
 		label=\null, 
 		leftmargin=0pt, 
