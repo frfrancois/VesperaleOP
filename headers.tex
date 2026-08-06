@@ -65,36 +65,27 @@ headsep=3mm,
 \usepackage[forcecompile]{gregoriotex}
 
 %% Variable globale contenant le nom de fichier de la pièce en train d'être imprimée, qui est aussi son label pour référence interne
-\newcommand{\labelbuffer}{}
+\global\def\labelbuffer{}
 %% Variable globale contenant le nom de l'index (A, H, R) pertinent pour la pièce en train d'être imprimée, s'il y en a un
-\newcommand{\indexnamebuffer}{}
+\global\def\indexnamebuffer{}
 %% Variable globale contenant le nom de la pièce (tel qu'indiqué dans l'en-tête name:) en train d'être imprimée
-\newcommand{\namebuffer}{}
+\global\def\namebuffer{}
 %% Variable globale contenant le mode (+ differentia si antienne) de la pièce en train d'être imprimée, pour l'imprimer en annotation
-\newcommand{\annotationmode}{}
+\global\def\annotationmode{}
 %% Variable globale contenant le mode (+ parfois differentia si un mode a plusieurs pointages) pour déterminer le prochain psaume pointé.
-\newcommand{\nextpsalmmode}{}
+\global\def\nextpsalmmode{}
 %% Variable globale contenant le mode de la pièce en train d'être imprimée, pour l'ajouter à son entrée d'index.
-\newcommand{\indexedmode}{}
-
-%%%% Code magique pour définir \grenewcommand, qui fait la même chose que \renewcommand mais avec un effet global
-\makeatletter
-\def\gnewcommand{\g@star@or@long\new@command}
-\def\grenewcommand{\g@star@or@long\renew@command}
-\def\g@star@or@long#1{% 
-  \@ifstar{\let\l@ngrel@x\global#1}{\def\l@ngrel@x{\long\global}#1}}
-\makeatother
-%%%% fin du code magique
+\global\def\indexedmode{}
 
 %% Cette section prend un header office-part (Antiphona, etc.) détermine son index
 \newcommand{\abbrev}[3]{%
   \ifstrequal{#1}{#2}{%
-	\grenewcommand{\indexnamebuffer}{#3}%
+	\global\def\indexnamebuffer{#3}%
   }%
   {}%
 }
 \newcommand{\officepartannotation}[1]{%
-  \grenewcommand{\indexnamebuffer}{}%
+  \global\def\indexnamebuffer{}%
   \abbrev{#1}{Antiphona}{A}%
   \abbrev{#1}{Hymnus}{H}%
   \abbrev{#1}{Responsorium breve}{R}%
@@ -107,9 +98,9 @@ headsep=3mm,
 %% elle porte également l'indexation avec le nom, le mode et l'index identifiés.
 \newcommand{\changemode}[5]{%
   \ifstrequal{#1}{#2}{%
-	\grenewcommand{\nextpsalmmode}{#3}%
-	\grenewcommand{\annotationmode}{#4}%
-	\grenewcommand{\indexedmode}{#5}%
+	\global\def\nextpsalmmode{#3}%
+	\global\def\annotationmode{#4}%
+	\global\def\indexedmode{#5}%
   }%
   {}%
 }
@@ -118,8 +109,8 @@ headsep=3mm,
   % 2e colonne: mode de pointage du psaume
   % 3e colonne: mode imprimé au-dessus de l'initiale
   % 4e colonne: mode imprimé dans l'entrée d'index
-  \grenewcommand{\annotationmode}{#1}
-  \grenewcommand{\nextpsalmmode}{#1}
+  \global\def\annotationmode{#1}
+  \global\def\nextpsalmmode{#1}
   \changemode{#1}{1a}{1}{I a}{1}
   \changemode{#1}{1b}{1}{I b}{1}
   \changemode{#1}{1c}{1}{I c}{1}
@@ -175,7 +166,7 @@ end
   \protected@edef\@currentlabelname{\directlua{delete_newline(\luastring{#1})}}%
   \phantomsection%
   \label{\labelbuffer}%
-  \grenewcommand{\namebuffer}{#1}
+  \global\def\namebuffer{#1}
 }
 \makeatother
 
@@ -289,8 +280,8 @@ end
 % la surcharge de \hyphenpenalty est nécessaire sur certaines anciennes versions de gregorio
 % voir https://tex.stackexchange.com/questions/581013/lualatex-hyphenation-issue-in-fancyhdr-with-gregoriotex-and-multicols-latin-te
 \newcommand{\setheader}[1]{
-	\grenewcommand{\themark}{\hyphenpenalty=50{\sc#1}}
-	\grenewcommand{\themark}{{\sc#1}}
+	\renewcommand{\themark}{\hyphenpenalty=50{\sc#1}}
+	\renewcommand{\themark}{{\sc#1}}
 }
 
 %%%%%%%%%%%%%%% STYLES %%%%%%%%%%%%%%%
