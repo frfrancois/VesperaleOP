@@ -29,19 +29,17 @@
 
 %% ligne horizontale sur toute la largeur de la page
 \newcommand{\lineamagna}{
-	\begin{center}
-	\noindent\rule{\textwidth}{0.4pt}
-	\end{center}
+	\par
+	\filbreak
+	\xleaders\vbox to 4ex{\vfill\rule{\textwidth}{0.5pt}\vfill}\vskip4ex
 }
 
 %% ligne horizontale sous les titres
 \newcommand{\lineaparva}{
-	\begin{center}
-	\noindent\rule{3cm}{0.4pt}
-	\end{center}
+	\par
+	\filbreak
+	\xleaders\vbox to 4ex{\vfill\hfil\rule{0.3\textwidth}{0.5pt}\hfil\vfill}\vskip4ex
 }
-
-
 
 %%%%%%%%%%%%%%% GRAPHIES SPÉCIFIQUES
 
