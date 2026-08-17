@@ -348,3 +348,35 @@ end
 %% When we start a new subfile (new chapter), 
 %% we start on a new page (with blank filling on the previous page) and create a corresponding label.
 \newcommand{\customsubfile}[1]{\newpage\label{#1}\thispagestyle{empty}\subfile{#1}}
+
+\begin{luacode*}
+local glyph = node.id("glyph")
+local glue  = node.id("glue")
+local kern  = node.id("kern")
+
+local function fix_space_T(head)
+  local n = head
+  while n do
+    if n.id == glue then
+      local next = n.next
+      if next and next.id == glyph then
+        local char = unicode.utf8.char(next.char)
+        if char == "T" or char == "V" then
+          -- Création du kern
+          local k = node.new(kern)
+          k.kern = 1.5 * 65536  -- 1pt
+
+          -- Insertion du kern entre l'espace et le T
+          k.next = next
+          n.next = k
+        end
+      end
+    end
+    n = n.next
+  end
+  return head
+end
+
+luatexbase.add_to_callback("pre_linebreak_filter", fix_space_T, "fix_space_T")
+luatexbase.add_to_callback("hpack_filter", fix_space_T, "fix_space_T_hpack")
+\end{luacode*}
