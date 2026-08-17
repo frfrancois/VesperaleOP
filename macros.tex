@@ -64,9 +64,9 @@
 	%% #1 : texte de l'oraison, avec \psstar et \pscross pour les astérisques et obèles
 	\needspace{3\baselineskip} % Pour assurer que le titre "Oratio" n'est pas seul en bas de page
 	\begin{center}
-	\textbf{Oratio}
+	\textcolor{gregoriocolor}{Oratio}
 	\end{center}
-	\drop #1
+	\rdrop #1
 }
 
 %% Capitule
@@ -74,10 +74,13 @@
 	%% #1 : référence biblique
 	%% #2 : texte du capitule, avec \psstar et \pscross pour les astérisques et obèles
 	\needspace{3\baselineskip} % Pour assurer que le titre "Capitulum" n'est pas seul en bas de page
-	\begin{center}
-	\textbf{Capitulum} \rubrica{#1}
-	\end{center}
-	\drop #2
+	\hspace*{0.04\textwidth}%
+	\textcolor{gregoriocolor}{Capitulum}%
+	\hfill%
+	\textcolor{gregoriocolor}{#1}%
+	\hspace*{0.04\textwidth}%
+
+	\rdrop #2
 }
 
 %%%%%%%%%%%%%%% COMMON RUBRICS %%%%%%%%%%%%%%%
