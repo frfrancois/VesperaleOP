@@ -1,0 +1,367 @@
+\documentclass[12pt, twoside, french, openany]{book}
+
+\input{headers}
+
+%\externaldocument[V-]{VesperaleOP}
+
+%%Le pulpitarium nécessite:
+%%Les RR/ prolixes (techniquement l'incipit et le V/ mais on met tout)
+%%Les incipit des hymnes
+%%Les VV/ (techniquement pour les versiculaires donc dans le psautier et pas pour les chantres)
+%%Les AA/@M des fêtes >=3cl et les tons des M
+%%Les Benedicamus
+
+\begin{luacode*}
+  function process_hymn(fname)
+    local f = io.open(fname, "r")
+    if not f then
+      tex.error("Impossible d'ouvrir le fichier gabc: " .. fname)
+      return
+    end
+
+    local headers = {}
+    local body_lines = {}
+    local in_headers = true
+
+    for line in f:lines() do
+      if in_headers then
+        -- Détection robuste du séparateur d’en-têtes
+        if line:match("^%%") then
+          in_headers = false
+        else
+          table.insert(headers, line)
+        end
+      else
+        table.insert(body_lines, line)
+      end
+    end
+
+    f:close()
+
+    local header_text = table.concat(headers, "\n")
+    local body_text   = table.concat(body_lines, "\n")
+
+    -- Extraction du mode
+    local mode = header_text:match("mode:%s*(.-)\r?\n")
+    if not mode then
+      mode = header_text:match("mode:%s*(.-)%s*$")
+    end
+    if not mode then mode = "" end
+
+    -- Extraction du corps jusqu’au premier (::)
+    local first_part = body_text
+    local s, e = body_text:find("%(%:%:%)")
+    if s then
+      first_part = body_text:sub(1, e)
+    end
+
+    -- Variables globales TeX
+    tex.sprint(string.format("\\gdef\\hymnMode{%s}", mode))
+    tex.sprint(string.format("\\gdef\\hymnIncipit{%s}", first_part))
+  end
+\end{luacode*}
+
+% Macro TeX qui appelle la fonction Lua sur un fichier .gabc
+\newcommand{\hymnusincipit}[1]{%
+  \directlua{process_hymn("gabc/#1.gabc")}%
+  \greannotation{\hymnMode}
+  \setcounter{page}{\getpagerefnumber{V-#1}}
+  \gabcsnippet{\hymnIncipit}
+}
+
+\makeatletter
+\let\oldcantus\cantus
+\def\cantus{%
+  \@ifnextchar[{\cantus@with}{\cantus@without}%
+}
+\def\cantus@with[#1]#2#3{%
+  \setcounter{page}{\getpagerefnumber{V-#2}}%
+  \oldcantus[#1]{#2}{#3}%
+}
+\def\cantus@without#1#2{%
+  \setcounter{page}{\getpagerefnumber{V-#1}}%
+  \oldcantus[no-override]{#1}{#2}%
+}
+\makeatother
+
+\begin{document}
+
+\festum{}{Dominica I Adventus}{I classis}{Dominica I Adventus}{2}
+
+\titulumrubrica{Ad I Vesperas}
+
+\cantus{A1F0VR}{\rrann}
+
+\rubrica{Capitulum \normaltext{Ecce dies véniunt.}, Hymnus \normaltext{Cónditor.} et \vvrub \normaltext{Roráte.}, ut in Psalterio, pag. \pageref{AVH}, in Vesperis dicantur quotidie per Adventum, cum de Tempore agitur. Oratio vero dominicæ præcedentis, nisi aliter notetur.}
+
+\cantus{A1F0VAM}{Ad Magn.}
+
+\titulumrubrica{Ad II Vesperas}
+\cantus{A1F1VAM}{Ad Magn.}
+
+%%%% DOM II. ADVENTUS
+\festum{}{Dominica II Adventus}{I classis}{Dominica II Adventus}{2}
+\titulumrubrica{Ad I Vesperas}
+\cantus{A1F7VR}{\rrann}
+\cantus{A1F7VAM}{Ad Magn.}
+
+
+\titulumrubrica{Ad II Vesperas}
+\cantus{A2F1VAM}{Ad Magn.}
+
+
+%%%% DOM III. ADVENTUS
+\festum{}{Dominica III Adventus}{I classis}{Dominica III Adventus}{2}
+\titulumrubrica{Ad I Vesperas}
+\cantus{A2F7VR}{\rrann}
+\cantus{A2F7VAM}{Ad Magn.}
+
+
+\titulumrubrica{Ad II Vesperas}
+\cantus{A3F1VAM}{Ad Magn.}
+\lineamagna
+
+%%%%ANTIPHONAE MAJORES (``O'')
+\rubrica{Debent sequentes septem antiphonæ quæ incipiunt per \normaltext{O}, die 17 decembris inchoari, et sic consequenter dici ad Magnificat vel ad memoriam de Adventu usque ad vigiliam Nativitatis Domini exclusive, servato dumtaxat hoc ordine quo positæ sunt. Et tunc in Vesperis nec preces dicuntur nec prostrationes fiunt, etiam si Officium de feria fuerit.}
+
+\festum{}{Die 17 decembris}{}{Antiphonæ Majores}{3}
+\cantus{1217VAM}{Ad Magn.}
+
+\festum{}{Die 18 decembris}{}{Antiphonæ Majores}{3}
+\cantus{1218VAM}{Ad Magn.}
+
+\festum{}{Die 19 decembris}{}{Antiphonæ Majores}{3}
+\cantus{1219VAM}{Ad Magn.}
+
+\festum{}{Die 20 decembris}{}{Antiphonæ Majores}{3}
+\cantus{1220VAM}{Ad Magn.}
+
+\festum{}{Die 21 decembris}{}{Antiphonæ Majores}{3}
+\cantus{1221VAM}{Ad Magn.}
+
+\festum{}{Die 22 decembris}{}{Antiphonæ Majores}{3}
+\cantus{1222VAM}{Ad Magn.}
+
+\festum{}{Die 23 decembris}{}{Antiphonæ Majores}{3}
+\cantus{1223VAM}{Ad Magn.}
+\lineamagna
+
+
+%%%% DOM IV. ADVENTUS
+\festum{}{Dominica IV Adventus}{I classis}{Dominica IV Adventus}{2}
+\titulumrubrica{Ad I Vesperas}
+\cantus{A3F7VR}{\rrann}
+\rubrica{Ad Magnificat antiphona \normaltext{O.}}
+
+
+\titulumrubrica{Ad II Vesperas}
+\rubrica{Ad Magnificat antiphona \normaltext{O.}}
+
+
+
+%%%% IN NATIVITATE DOMINI
+\festum{}{In Nativitate Domini}{I classis cum octava II classis}{In Nativitate Domini}{1}
+\lineaparva
+
+\titulumrubrica{Ad I Vesperas}
+
+
+\cantus{1224VR}{\rrann}
+\hymnusincipit{1224VH}
+
+\versiculus{Tamquam sponsus.}{Dóminus procédens de thálamo suo.}
+\cantus{1224VAM}{Ad Magn.}
+
+\titulumrubrica{Ad II Vesperas}
+
+
+\rubrica{Hymnus et \vvrub ut in I Vesperis.}
+\cantus{1225VAM}{Ad Magn.}
+
+\festum{}{Diebus 29, 30, 31 decembris}{si de octava fiat}{Diebus 29, 30, 31 decembris}{3}
+\lineaparva
+
+\rubrica{Psalmi cum suis antiphonis, capitulum, hymnus et versiculus ut in II Vesperis Nativitatis Domini, pag. \pageref{1225VA1}}
+\cantus{N0VAM}{Ad Magn.}
+\lineamagna
+
+\festum{}{Dominica infra octavam Nativitatis Domini}{II classis}{Dominica infra oct. Nativitatis Domini}{2}
+\lineaparva
+
+\rubrica{De I Vesperis dominicæ nihil fit.}
+
+\titulumrubrica{Ad Vesperas}
+\rubrica{Psalmi cum suis antiphonis, capitulum, hymnus et versiculus ut in II Vesperis Nativitatis Domini, pag. \pageref{1225VA1}}
+\cantus{N0F1VAM}{Ad Magn.}
+
+
+\rubrica{Et non fit memoria octavæ Nativitatis.}
+\lineamagna
+
+
+%%%% OCTAVA NATIVITATIS DOMINI
+\festum{}{Octava Nativitatis Domini}{I classis}{Octava Nativitatis Domini}{1}
+\lineaparva
+
+\titulumrubrica{Ad I Vesperas}
+
+\cantus{1231VR}{\rrann}
+
+\rubrica{Hymnus et \vvrub ut in I Vesperis Nativitatis Domini, pag. \pageref{1224VH}}
+
+\cantus{1231VAM}{Ad Magn.}
+
+
+\titulumrubrica{Ad II Vesperas}
+
+
+\rubrica{Hymnus et \vvrub ut in I Vesperis Nativitatis Domini, pag. \pageref{1224VH}}
+\cantus{0101VAM}{Ad Magn.}
+\lineamagna
+
+%%%% In Officio feriali tempore Nativitatis
+\festum{Diebus a 2 ad 5 januarii}{In Officio feriali tempore Nativitatis}{}{Diebus a 2 ad 5 januarii}{3}
+\lineaparva
+\rubrica{Omittuntur preces et prostrationes.}
+
+
+
+%%%% SS NOMINIS JESU
+\festum{Dominica a die 2 ad diem 5 januarii occurrenti (vel, si hæc defecerit, die 2 januarii)}{Sanctissimi Nominis Jesu}{II classis}{Sanctissimi Nominis Jesu}{2}
+\lineaparva
+
+\rubrica{Quando hoc festum die 2 januarii celebratur, in II Vesperis præcedentis nihil fit de SS. Nomine.}
+
+\titulumrubrica{Ad I Vesperas}
+
+\cantus{0102VR}{\rrann}
+\hymnusincipit{0102VH1}
+\hymnusincipit{0102VH2}
+
+\versiculus{Sit nomen Dómini benedíctum.}{Ex hoc nunc, et usque in sǽculum.}
+
+
+\cantus{0102VAM}{Ad Magn.}
+
+\titulumrubrica{Ad II Vesperas}
+\rubrica{Quando hoc festum celebratur die 5 januarii, Vesperæ dicuntur de sequenti festo Epiphaniæ sine memoria de festo currenti.}
+\rubrica{Capitulum, hymnus et \vvrub ut in I Vesperis.}
+\cantus{0103VAM}{Ad Magn.}
+
+
+\lineamagna
+
+%%%% IN EPIPHANIA DOMINI
+\festum{}{In Epiphania Domini}{I classis}{In Epiphania Domini}{1}
+\lineaparva
+
+\titulumrubrica{Ad I Vesperas}
+
+\cantus{0105VR}{\rrann}
+\hymnusincipit{0105VH}
+\versiculus{Reges Tharsis et ínsulæ múnera ófferent.}{Reges Arabum et Saba dona addúcent.}
+
+\cantus{0105VAM}{Ad Magn.}
+
+\titulumrubrica{Ad II Vesperas}
+
+\rubrica{Capitulum, hymnus et \vvrub ut in I Vesperis.}
+
+\cantus{0106VAM}{Ad Magn.}
+
+%%%% In Officio feriali tempore Epiphaniæ
+\festum{Diebus a 7 ad 12 januarii}{In Officio feriali tempore Epiphaniæ}{}{Diebus a 7 ad 12 januarii}{3}
+\lineaparva
+\rubrica{Omittuntur preces et prostrationes.}
+
+
+
+\rubrica{Reliqua ut in II Vesperis Festi, præter Antiphonam sequentem:}
+\cantus{0107VAM}{Ad Magn.}
+\lineamagna
+
+
+%%%% SANCTAE FAMILIAE JESU, MARIAE, JOSEPH
+\festum{Dominica I post Epiphaniam}{Sanctæ Familiæ Jesu, Mariæ, Joseph}{II classis}{S. Familiæ Jesu, Mariæ, Joseph}{2}
+\lineaparva
+
+\cantus{E0F7VR}{\rrann}
+\hymnusincipit{E0F7VH}
+
+\versiculus{Beáti qui hábitant in domo tua, Dómine.}{In sǽcula sæculórum laudábunt te.}
+
+\cantus{E0F7VAM}{Ad Magn.}
+
+
+\titulumrubrica{Ad II Vesperas}
+
+
+\rubrica{Capitulum, hymnus et \vvrub ut in I Vesperis.}
+\cantus{E1F1VAM}{Ad Magn.}
+
+
+%%%% IN COMMEMORATIONE BAPTISMATIS DNJC
+\festum{Die 13 januarii}{In Commemoratione Baptismatis D.N.J.C.}{II classis}{Die 13 jan. - In Commem. Baptismatis D.N.J.C.}{2}
+\lineaparva
+
+\rubrica{Si Commemoratione Baptismatis Domini in dominica occurit, fit de festo S. Familiæ sine ulla memoria.}
+
+\titulumrubrica{Ad Vesperas}
+
+
+\rubrica{Capitulum, hymnus et \vvrub ut in I Vesperis Epiphaniæ Domini.}
+\cantus{0113VAM}{Ad Magn.}
+
+
+\festum{}{Psalterium}{per hebdomadam dispositum}{Psalterium}{0}
+\addcontentsline{toc}{chapter}{Psalterium}
+\addcontentsline{toc}{section}{Per Annum}
+
+%%%%DOMINICA
+\festum{}{Dominica}{ad Vesperas}{Dominica ad Vesperas}{2}
+\lineaparva
+
+\titulumrubrica{Tempore Adventus}
+
+\hymnusincipit{AVH}
+
+\versiculus{Roráte, cæli, désuper, et nubes pluant justum.}{Aperiátur terra, et gérminet Salvatórem.}
+
+
+\titulumrubrica{Per Annum et tempore Septuagesimæ}
+
+\hymnusincipit{DVH}
+
+\versiculus{Dirigátur, Dómine, orátio mea.}{Sicut incénsum in conspéctu tuo.}
+
+
+\titulumrubrica{Tempore Quadragesimæ}
+
+\hymnusincipit{Q1VH}
+
+\versiculus{Angelis suis Deus mandávit de te.}{Ut custódiant te in ómnibus viis tuis.}
+
+
+\titulumrubrica{Tempore Passionis}
+
+\hymnusincipit{Q5VH}
+
+\versiculus{Eripe me, Dómine, ab hómine malo.}{A viro iníquo éripe me.}
+
+%%%SABBATO
+\lineamagna
+\festum{}{Sabbato}{ad I Vesperas dominicæ}{Sabbato ad I Vesperas dominicæ}{2}
+\lineaparva
+
+\titulumrubrica{Per Annum}
+
+\rubrica{Responsorium, si dicendum occurrerit.}
+
+\hymnusincipit{SVH}
+
+\versiculus{Vespertína orátio ascéndat ad te, Dómine.}{Et descéndat super nos misericórdia tua.}
+
+\rubrica{Ant. ad Magnificat ut in Proprio de Tempore, præterquam in Sabbatis ante Dominicam II post Epiphaniæ usque ad Sabbatum ante Septuagesimam inclusive, in quibus dicitur sequens :}
+\cantus{SVAM}{Ad Magn.}
+
+\end{document}
