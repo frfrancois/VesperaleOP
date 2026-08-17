@@ -84,6 +84,8 @@ headsep=3mm,
 \global\def\namebuffer{}
 %% Variable globale contenant le mode (+ differentia si antienne) de la pièce en train d'être imprimée, pour l'imprimer en annotation
 \global\def\annotationmode{}
+%% Variable globale contenant l'annotation à imprimer à la place du mode, si celle-ci est fournie
+\global\def\annotationmodeoverride{}
 %% Variable globale contenant le mode (+ parfois differentia si un mode a plusieurs pointages) pour déterminer le prochain psaume pointé.
 \global\def\nextpsalmmode{}
 %% Variable globale contenant le mode de la pièce en train d'être imprimée, pour l'ajouter à son entrée d'index.
@@ -143,7 +145,11 @@ headsep=3mm,
   \changemode{#1}{8b}{8}{VIII b}{8}
   \changemode{#1}{8}{8}{VIII}{8}
   \changemode{#1}{Per.}{per}{Per.}{P}
-  \greannotation{\annotationmode}
+  % si l'annotation de mode a été explicitement fournie (argument #1 de \cantus non vide),
+  % on l'imprime, sinon, on imprime l'annotation de mode déterminée automatiquement.
+  \expandafter\ifstrequal\expandafter{\annotationmodeoverride}{no-override}%
+	{\greannotation{\annotationmode}}%
+	{\greannotation{\annotationmodeoverride}}%
   %% indexation
   \ifstrequal{H}\expandafter{\indexnamebuffer}{%
     \index[\indexnamebuffer]{{\namebuffer}@\indexedmode & \namebuffer}%
@@ -194,11 +200,12 @@ end
   \gresetinitiallines{1}
 }
 
-\newcommand{\cantus}[3][]{
+\newcommand{\cantus}[3][no-override]{
   %% #1 (optionnel) : l'annotation à faire figurer à la place du mode
   %% #2 : le nom de fichier (sans .gabc) qui sera la référence de la pièce
   %% #3 : l'annotation à faire figurer au-dessus du mode
   \renewcommand{\labelbuffer}{#2}
+  \renewcommand{\annotationmodeoverride}{#1}
   \greannotation{#3}
   \setmainfont{Plantin MT Pro}[Scale=1] % changer cette valeur à 1.15 ou 1.20 pour augmenter la taille du texte des chants de 15% ou 20%
   \gregorioscore{gabc/#2}
