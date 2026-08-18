@@ -15,11 +15,24 @@
 %%%%% Fin du code magique
 
 %% Définition des index 
-\indexsetup{level=\section*,toclevel=section,noclearpage,othercode=\footnotesize\thispagestyle{empty}}
-\makeindex[name=A,title=Antiphonæ, columns=2,columnseprule, options=-s dotted_mode.ist]
-\makeindex[name=H,title=Hymni, columns=2,columnseprule, options=-s dotted_mode.ist]
-\makeindex[name=R,title=Responsoria, columns=2,columnseprule, options=-s dotted_mode.ist]
-\makeindex[name=F,title=Festa, columns=2,columnseprule, options=-s dotted.ist]
+\indexsetup{
+	level=\section*,
+	toclevel=section,
+	noclearpage,
+	othercode=\footnotesize\thispagestyle{empty}
+}
+\makeindex[name=A,title=Index Antiphonarum, columns=2,columnseprule, options=-s dotted_mode.ist]
+\makeindex[name=H,title=Index Hymnorum, columns=2,columnseprule, options=-s dotted_mode.ist]
+\makeindex[name=R,title=Index Responsoriorum, columns=2,columnseprule, options=-s dotted_mode.ist]
+\makeindex[name=F,title=Index Festorum, columns=2,columnseprule, options=-s dotted.ist]
+
+%% wrapper pour printindex qui rectifie les en-têtes et le style de page
+\newcommand{\cprintindex}[2]{
+	\setheader{#2}
+	\pagestyle{fancy}
+	\thispagestyle{empty}
+	\printindex[#1]
+}
 
 %%%%%%%%%%%%%%% GÉOMÉTRIE %%%%%%%%%%%%%%%
 

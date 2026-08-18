@@ -1,5 +1,5 @@
 headings_flag 0
-preamble "\\section*{\\indexname}%
+preamble "\\par{\\centering\\scshape\\large\\indexname\\par}%
 \\thispagestyle{empty}
 \\pagestyle{fancy}
 \\begin{multicols}{2}

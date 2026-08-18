@@ -1,3 +1,6 @@
+preamble "\\par{\\centering\\scshape\\large\\indexname\\par}%
+\\thispagestyle{empty}
+\\pagestyle{fancy}"
 delim_0 " \\leavevmode\\kern3pt\\leaders\\hbox{. }\\hfill"
 delim_1 " \\leavevmode\\kern3pt\\leaders\\hbox{. }\\hfill"
 group_skip "\n"
