@@ -387,22 +387,22 @@ end
 		\ifstrequal{#3}{}{}{\Large \textcolor{gregoriocolor}{#3}\par}%
 	}{}
 	\ifstrequal{#5}{2}{
-		\needspace{8\baselineskip}%
-		\ifstrequal{#1}{}{}{\large \textbf{#1}\par}%
-		{\LARGE {#2}}\par%
-		\ifstrequal{#3}{}{}{\large \textcolor{gregoriocolor}{#3}\par}%
+		\needspace{6\baselineskip}%
+		\ifstrequal{#1}{}{}{\normalsize \textcolor{gregoriocolor}{#1}\par}%
+		{\Large {#2}}\par%
+		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
 	}{}
 	\ifstrequal{#5}{3}{
-		\needspace{8\baselineskip}%
-		\ifstrequal{#1}{}{}{\normalsize \textbf{#1}\par}%
-		{\Large {#2}}\par%
+		\needspace{5\baselineskip}%
+		\ifstrequal{#1}{}{}{\normalsize \textcolor{gregoriocolor}{#1}\par}%
+		{\large {#2}}\par%
 		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
 	}{}
 	\end{center}
 	%% définition de l'en-tête de page
 	\setheader{#4}
 	%% si une date est indiquée, on indexe
-	%\ifstrequal{#1}{}{}{\index[F]{#2}} %% pas beau: rajouter un argument pour le nom indexé de la fête, ou déduire ce nom en coupant S. devant
+	\ifstrequal{#1}{}{}{\index[F]{#2}} %% pas beau: rajouter un argument pour le nom indexé de la fête, ou déduire ce nom en coupant S. devant
 }
 
 %% Magie profonde pour pouvoir insérer \drop devant un paragraphe, et que cela insère une lettrine.
