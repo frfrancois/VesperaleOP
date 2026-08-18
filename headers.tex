@@ -266,6 +266,7 @@ end
 \newenvironment{psalmodia}{\begin{multicols}{2}}{\end{multicols}}
 
 %% Commande pour imprimer une liste itémisée (psaumes, cantiques)
+\newcommand{\psalmverseindent}{5pt}
 \newcommand{\itemizedlist}[2][]{
 	%% #1 (optionnel) : titre à imprimer en en-tête
 	%% #2 : fichier itémisé à imprimer sur deux colonnes
@@ -275,7 +276,7 @@ end
 	\begin{itemize}[
 		label=\null, 
 		leftmargin=0pt, 
-		itemindent=5pt, 
+		itemindent=\psalmverseindent, 
 		labelsep=0pt, 
 		labelwidth=0pt, 
 		rightmargin=0pt, 
@@ -285,8 +286,13 @@ end
 	\end{itemize}%
 }
 
-\newcommand{\pslettrine}[2]{%
-	\lettrine{#1}{}#2%
+%% commande appelée au premier \item de chaque fichier de psaume 
+%% pour y insérer une lettrine de hauteur 2
+%% #1: initiale 
+%% #2: reste du premier mot
+%% #3: reste du premier verset
+\newcommand{\pslettrine}[3]{%
+	\hspace{-\psalmverseindent}\parbox[b]{\linewidth}{\lettrine{#1}{}#2 #3}%
 }
 
 \newcommand{\psalmusinpsalmodia}[2][\nextpsalmmode]{
