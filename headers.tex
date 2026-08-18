@@ -110,6 +110,9 @@ luatexbase.add_to_callback("hpack_filter", fix_space_T, "fix_space_T_hpack")
 
 \usepackage[forcecompile]{gregoriotex}
 
+%% On emploie la règle dominicaine sur les altérations valables jusqu'à la fin de la ligne
+\gresetalterationeffect{line}
+
 %% Variable globale contenant le nom de fichier de la pièce en train d'être imprimée, qui est aussi son label pour référence interne
 \global\def\labelbuffer{}
 %% Variable globale contenant le nom de l'index (A, H, R) pertinent pour la pièce en train d'être imprimée, s'il y en a un
