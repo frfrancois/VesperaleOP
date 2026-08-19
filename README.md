@@ -1,4 +1,4 @@
-Ce dépôt contient le code de développement du futur Vespéral dominicain basé sur l'Antiphonaire du R.P. Gillet op (1933), écrit en GABC et en LaTeX.
+Ce dépôt contient le code de développement du futur Vespéral dominicain basé sur l'Antiphonaire du R.P. Gillet op (1933), corrigé à la marge à partir du prototype du bienheureux Humbert, écrit en GABC et en LaTeX.
 
 ## Structure du projet
 
@@ -53,12 +53,11 @@ L'en-tête `mode` contient le mode la pièce, en chiffres arabes de 1 à 8, avec
 
 ### Bonnes pratiques
 
-La numérotation des strophes d'hymnes se fait après la double barre: `... por(e)ta.(d) (::) 2. Su(d)mens(hi) ...` 
+La numérotation des strophes d'hymnes se fait après la double barre et entre balises <sp> : `... por(e)ta.(d) (::) <sp>2.</sp> Su(d)mens(hi) ...` 
 
-L'incipit du psaume est précédé de `<i>Ps.</i>`, l'incipit du cantique, de `<i>Cant.</i>` (attention, encadrer la première voyelle d'accolades, pour centrer la note dessus: `<i>Cant.</i> M{a}g(f)ni(gh)...`)
+L'incipit du psaume est précédé de `<sp>Ps</sp>`, l'incipit du cantique, de `<sp>Cant</sp>` (attention, encadrer la première voyelle d'accolades, pour centrer la note dessus: `<sp>Cant</sp> M{a}g(f)ni(gh)...`)
 
 L'euouae est encadrée par les balises `<eu>` : `<eu>E(h) u(h) o(g) u(f) a(gh) e.(gf) </eu>(::)` ce qui autorise gregorio à le comprimer plus que d'habitude, mais lui interdit de le séparer sur deux lignes, et supprime le guidon s'il est renvoyé de ce fait à la ligne suivante.
-
 
 ## Commandes LaTeX
 
@@ -80,9 +79,9 @@ Chaque verset commence par `\item`
 
 Commande utilisée pour tous les titres qui modifient les en-têtes de pages (titres de sous-parties, titres de fêtes):
 
-* jour : donné explicitement comme imprimé, p.ex. "Die 24 Junii"
+* jour : donné explicitement comme imprimé, p.ex. "Die 24 Junii" (pour les 1e et 2e classes), "24" (pour les 3e classes)
 * titre : pas en capitales : si on décide d'imprimer en capitales, le système fera la conversion. Cela préserve la possibilité de changer d'avis. p.ex. "in Nativitate S. Joannis Baptistæ"
-* sous-titre : certains titres du Gillet ont une deuxième ligne imprimée moins gras. Cet argument est prépositionné au cas où on en a besoin pour reproduire ce genre de cas.
+* sous-titre : la classe de la fête, ou un éventuel sous-titre.
 * en_tete : ce qu'on veut en tête de page à partir de la page sur laquelle commence cette fête. p.ex. "Die 24 Junii --- in Nativitate S. Joannis Bapt."
 * niveau_titre : 0 pour les titres les plus grands (Proprium de Tempore), 1 pour les fêtes majeures avec un titre en pleine largeur, 2 ou 3 pour les titres plus petits.
 
@@ -106,6 +105,13 @@ Commande utilisée pour les psaumes.
 
 * ton : argument optionnel indiquant le ton de pointage. Celui-ci est détecté automatiquement à partir de l'antienne précédente. On peut forcer le ton de pointage dans les sections où on imprime plusieurs psaumes pointés sans rapport avec une antienne.
 * numero_psaume : le numéro, avec son suffixe pour les psaumes divisés (`144ii`) le cas échéant.
+
+Si plusieurs psaumes sont chantés à la suite sous la même antienne, il faut, si on veut éviter d'interrompre la double colonne avant chaque psaume, employer le code suivant:
+
+`\begin{psalmodia}
+`\psalmusinpsalmodia[ton]{numero_psaume}
+`\psalmusinpsalmodia...
+`\end{psalmodia}
 
 `\canticum[ton]{nom_fichier}{titre}{reference}`
 
@@ -160,9 +166,9 @@ Caractères spéciaux à copier-coller si votre clavier ne les a pas : æ œ Æ 
 
 ### Renvois
 
-`\label{nom_label}` n'imprime rien, mais mémorise le numéro de la page en cours pour future référence, et l'asspcie au nom `nom_label`
+`\label{nom_label}` n'imprime rien, mais mémorise le numéro de la page en cours pour future référence, et l'associe au nom `nom_label`
 
-Toutes les pièces sont labélisées par leur code Hudelmaier (nom de fichier sans le `.gabc`)
+Toutes les pièces sont labélisées automatiquement par leur code Hudelmaier (nom de fichier sans le `.gabc`)
 
 `\pageref{nom_label}` imprime le numéro de page de l'endroit où on a inséré `\label{nom_label}` (si `nom_label` est le code Hudelmaier d'une pièce, renvoie au début de la pièce)
 
