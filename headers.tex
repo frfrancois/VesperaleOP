@@ -449,6 +449,17 @@ end
   \lettrine{\textcolor{gregoriocolor}{#1}}{#2} % a trailing space
 }
 
+%%%%%%%%%%%%% Style de la TOC
+
+\usepackage{titletoc}
+
+\titlecontents{chapter}
+  [-0.5em]                       % indentation
+  {\normalfont}                 % style du texte dans la TOC (pas de gras)
+  {\contentslabel{1.5em}}       % numéro + espace
+  {}                            % avant le texte
+  {\hfill\contentspage}         % numéro de page aligné à droite
+
 %%%%%%%%%%%%%%% SUBFILES %%%%%%%%%%%%%%%
 
 \usepackage{xr}

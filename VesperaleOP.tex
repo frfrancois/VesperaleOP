@@ -28,7 +28,7 @@
 %\customsubfile{vop35_bmv_sabbato
 %\customsubfile{vop37_officium_defunctorum}
 %\customsubfile{vop40_festa_mobilia}
-%\customsubfile{vop50_sanctorale_decembris}
+\customsubfile{vop50_sanctorale_decembris}
 %\customsubfile{vop51_sanctorale_januarii}
 %\customsubfile{vop52_sanctorale_februarii}
 %\customsubfile{vop53_sanctorale_martii}
@@ -51,11 +51,11 @@
 \cprintindex{A}{Index Antiphonarum} % antiennes
 \cprintindex{H}{Index Hymnorum} % hymnes
 \cprintindex{R}{Index Responsoriorum} % répons
-\cprintindex{F}{Index Festorum} % fêtes
+%\cprintindex{F}{Index Festorum} % fêtes. Actuellement cassé.
 
 \cleardoublepage % on avance jusqu'à la première page de droite
 %% On donne son titre à la table des matières principale
-\renewcommand{\contentsname}{\textsc{Index generalis}}
+\renewcommand{\contentsname}{{\centering\normalfont\scshape Index generalis\par}}
 \tableofcontents % on imprime la table des matières
 
 \end{document}
