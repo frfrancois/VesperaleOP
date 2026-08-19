@@ -109,9 +109,9 @@ Commande utilisée pour les psaumes.
 Si plusieurs psaumes sont chantés à la suite sous la même antienne, il faut, si on veut éviter d'interrompre la double colonne avant chaque psaume, employer le code suivant:
 
 `\begin{psalmodia}
-`\psalmusinpsalmodia[ton]{numero_psaume}
-`\psalmusinpsalmodia...
-`\end{psalmodia}
+\psalmusinpsalmodia[ton]{numero_psaume}
+\psalmusinpsalmodia...
+\end{psalmodia}`
 
 `\canticum[ton]{nom_fichier}{titre}{reference}`
 
