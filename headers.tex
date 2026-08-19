@@ -258,6 +258,7 @@ end
   \renewcommand{\labelbuffer}{#2}
   \renewcommand{\annotationmodeoverride}{#1}
   \greannotation{#3}
+  \vspace{2pt plus 4pt minus 1pt}
   \setmainfont{Plantin MT Pro}[Scale=1] % changer cette valeur à 1.15 ou 1.20 pour augmenter la taille du texte des chants de 15% ou 20%
   \gregorioscore{gabc/#2}
   \setmainfont{Plantin MT Pro}[Scale=1]
@@ -419,14 +420,14 @@ end
 		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
 	}{}
 	\ifstrequal{#5}{2}{
-		\needspace{6\baselineskip}%
+		\needspace{7\baselineskip}%
 		\ifstrequal{#1}{}{}{\normalsize{\scshape \textcolor{gregoriocolor}{#1}}\par}%
 		\vspace{0.45mm}%
 		{\Large {#2}}\par%
 		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
 	}{}
 	\ifstrequal{#5}{3}{
-		\needspace{5\baselineskip}%
+		\needspace{6\baselineskip}%
 		\ifstrequal{#1}{}{}{{\noindent\makebox[0pt][l]{\large #1}}}%
 		\makebox[\textwidth][c]{\large #2}\par%
 		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
