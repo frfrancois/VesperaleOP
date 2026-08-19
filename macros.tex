@@ -1,9 +1,15 @@
 %%%%%%%%%%%%%%% CARACTÈRES SPÉCIAUX %%%%%%%%%%%%%%%
 
 %% V/, R/, A/, la croix, l'astérisque et l'obèle, pour usage dans GABC (<sp>V/</sp>, <sp>R/</sp>, <sp>A/</sp>, <sp>cross</sp>, <sp>*</sp>, <sp>+</sp>)
-\gresetspecial{V/}{\textcolor{gregoriocolor}{\fontspec{Charis}℣.~}}
-\gresetspecial{R/}{\textcolor{gregoriocolor}{\fontspec{Charis}℟.~}}
-\gresetspecial{A/}{\textcolor{gregoriocolor}{\fontspec{Charis}\Abar.~}}
+\newfontfamily\plantinsymbols[
+  Path = ./,
+  Extension = .ttf,
+  UprightFont = *-Regular,
+  ItalicFont  = *-Italic,
+  Ligatures = TeX,
+]{PlantinSymbols}
+\gresetspecial{V/}{\textcolor{gregoriocolor}{\plantinsymbols{V.~}}}
+\gresetspecial{R/}{\textcolor{gregoriocolor}{\plantinsymbols{R.~}}}
 \gresetspecial{+}{\textcolor{gregoriocolor}{\fontspec{Plantin MT Pro}†~}}
 \gresetspecial{*}{\textcolor{gregoriocolor}{\gresixstar}}
 \gresetspecial{++}{\textcolor{gregoriocolor}{\grecross}}
@@ -11,21 +17,18 @@
 \gresetspecial{lcrux}{\textcolor{gregoriocolor}{+}}
 %% Les mêmes, pour usage dans LaTeX (\vv \rr \aa \cc \psstar \pscross), pour usage dans le texte et les psaumes
 \newcommand{\specialcharhsep}{3mm} % space after invoking R/ or V/ or A/ outside rubrics
-\newcommand{\vv}{\textcolor{gregoriocolor}{\fontspec{Charis}℣.\nolinebreak[4]\hspace{\specialcharhsep}\nolinebreak[4]}}
-\newcommand{\rr}{\textcolor{gregoriocolor}{\fontspec{Charis}℟.\nolinebreak[4]\hspace{\specialcharhsep}\nolinebreak[4]}}
-\renewcommand{\aa}{\textcolor{gregoriocolor}{\fontspec{Charis}\Abar.\nolinebreak[4]\hspace{\specialcharhsep}\nolinebreak[4]}}
+\newcommand{\vv}{\textcolor{gregoriocolor}{\plantinsymbols{V.}\nolinebreak[4]\hspace{\specialcharhsep}\nolinebreak[4]}}
+\newcommand{\rr}{\textcolor{gregoriocolor}{\plantinsymbols{R.}\nolinebreak[4]\hspace{\specialcharhsep}\nolinebreak[4]}}
 \newcommand{\cc}{\textcolor{gregoriocolor}{\fontspec{FreeSerif}\symbol{"2720}~}}
 \newcommand{\psstar}{~\gresixstar}
 \newcommand{\pscross}{~\fontspec{Plantin MT Pro}†~\allowbreak}
 \newcommand{\psnonrepetitur}{\textcolor{gregoriocolor}{\fontspec{Plantin MT Pro}†~}}
 %% Les mêmes, pour usage dans les rubriques (pas d'espace avant, couleur identique au reste de la rubrique)
-\newcommand{\vvrub}{{\fontspec{Charis}℣.~}}
-\newcommand{\rrrub}{{\fontspec{Charis}℟.~}}
-\newcommand{\aarub}{{\fontspec{Charis}\Abar.~}}
+\newcommand{\vvrub}{{\plantinsymbols{V.~}}}
+\newcommand{\rrrub}{{\plantinsymbols{R.~}}}
 %% Les mêmes, pour usage en annotation
-\newcommand{\vvann}{{\fontspec{Charis}℣.}}
-\newcommand{\rrann}{{\fontspec{Charis}℟.}}
-\newcommand{\aaann}{{\fontspec{Charis}\Abar.}}
+\newcommand{\vvann}{{\plantinsymbols{V.}}}
+\newcommand{\rrann}{{\plantinsymbols{R.}}}
 %% numéros de strophes d'hymnes
 \gresetspecial{2.}{\textcolor{gregoriocolor}{2.}}
 \gresetspecial{3.}{\textcolor{gregoriocolor}{3.}}
