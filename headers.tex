@@ -80,6 +80,7 @@ headsep=3mm,
 \usepackage{luacode}
 \usepackage{paracol}
 \usepackage{alltt}
+\usepackage{parskip}
 
 %%%%%%%%%%%%%%% POLICES DE CARACTÈRES %%%%%%%%%%%%%%%
 \setmainfont[Ligatures=TeX]{Plantin MT Pro} % changer pour changer la police
@@ -368,8 +369,12 @@ end
 
 %%%%%%%%%%%%%%% STYLES %%%%%%%%%%%%%%%
 
+%%%%%%%%%%%% Styles globaux
+
 %% Pas d'indentation des paragraphes
 \setlength{\parindent}{0mm}
+%% Espacement limité entre les paragraphes
+\setlength{\parskip}{6pt plus 3pt minus 1pt}
 
 %% Macro to print the name of a score in normal characters inside a \rubric
 \newcommand{\normaltext}[1]{{\normalfont\normalcolor #1}}
@@ -383,6 +388,8 @@ end
 \newcommand{\sylpass}[1]{{\itshape{}#1}}
 
 \input{macros}
+
+%%%%%%%%%%%%%% Styles des titres
 
 \newfontfamily\plantinlighttitles[
    Scale	=	1.05,
@@ -431,6 +438,8 @@ end
 	%% si une date est indiquée, on indexe
 	\ifstrequal{#1}{}{}{\index[F]{#2}} %% pas beau: rajouter un argument pour le nom indexé de la fête, ou déduire ce nom en coupant S. devant
 }
+
+%%%%%%%%%%%%% Styles des paragraphes spéciaux (capitulum oratio etc.)
 
 %% Magie profonde pour pouvoir insérer \drop devant un paragraphe, et que cela insère une lettrine.
 \def\drop #1#2 {% note the space before {
