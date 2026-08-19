@@ -419,8 +419,9 @@ end
 	}{}
 	\ifstrequal{#5}{3}{
 		\needspace{5\baselineskip}%
-		\ifstrequal{#1}{}{}{\normalsize{\scshape \textcolor{gregoriocolor}{#1}}\par}%
-		\vspace{0.25mm}%
+		\lineamagna
+		\ifstrequal{#1}{}{}{{\large{#1}\hfill~\par\vspace{-\baselineskip}}}%
+		\vspace{1.22mm}% a ajuster si on change la taille de police des titres de 3e niveau ou la taille de police générale
 		{\large {#2}}\par%
 		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
 	}{}
