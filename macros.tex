@@ -46,14 +46,12 @@
 %% ligne horizontale sur toute la largeur de la page
 \newcommand{\lineamagna}{
 	\par
-	\filbreak
 	\xleaders\vbox to 4ex{\vfill\rule{\textwidth}{0.5pt}\vfill}\vskip4ex
 }
 
 %% ligne horizontale sous les titres
 \newcommand{\lineaparva}{
 	\par
-	\filbreak
 	\xleaders\vbox to 4ex{\vfill\hfil\rule{0.3\textwidth}{0.5pt}\hfil\vfill}\vskip4ex
 }
 
@@ -65,10 +63,10 @@
 }
 
 %% Rubriques
-\newcommand{\rubrica}[1]{\textcolor{gregoriocolor}{{\small #1}}}
+\newcommand{\rubrica}[1]{\textcolor{gregoriocolor}{{\footnotesize #1}}}
 
 %% Rubriques employées comme titre d'une pièce ("per annum" centré)
-\newcommand{\titulumrubrica}[1]{\needspace{5\baselineskip}\begin{center}\textbf{#1}\end{center}}
+\newcommand{\titulumrubrica}[1]{\needspace{5\baselineskip}\begin{center}\textsc{#1}\end{center}}
 
 %% Petit titre intermédiaire
 \newcommand{\titulum}[1]{\needspace{3\baselineskip}\begin{center}\textbf{#1}\end{center}}
