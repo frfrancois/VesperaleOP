@@ -384,30 +384,43 @@ end
 
 \input{macros}
 
+\newfontfamily\plantinlighttitles[
+   Scale	=	1.05,
+   ItalicFont     = PlantinMTProLightIt,
+   BoldFont       = PlantinMTProRg,
+   BoldItalicFont = PlantinMTProRgIt]{PlantinMTProLight}
 \newcommand{\festum}[5]{
-	%% pré-titre, titre, sous-titre
+	%% #1 : pré-titre (date du jour, pour les fêtes fixes)
+	%% #2 : titre principal de la fête
+	%% #3 : sous-titre (classe de la fête) 
+	%% #4 : texte à afficher dans l'en-tête de page
+	%% #5 : taille de titre (0 pour le plus gros à 3 pour le plus petit)
 	\begin{center}
 	\ifstrequal{#5}{0}{
 		\needspace{9\baselineskip}%
-		\ifstrequal{#1}{}{}{\huge \textsc{#1}\par}%
-		{\Huge \uppercase{#2}}\par%
-		\ifstrequal{#3}{}{}{\huge \textsc{#3}\par}%
+		\ifstrequal{#1}{}{}{\large{\scshape \textcolor{gregoriocolor}{#1}}\par}%
+		{\huge \textsc{#2}}\par%
+		\ifstrequal{#3}{}{}{\large \textcolor{gregoriocolor}{#3}\par}%
 	}{}
 	\ifstrequal{#5}{1}{
 		\needspace{9\baselineskip}%
-		\ifstrequal{#1}{}{}{\Large \textsc{#1}\par}%
-		{\huge \textsc{#2}}\par%
-		\ifstrequal{#3}{}{}{\Large \textcolor{gregoriocolor}{#3}\par}%
+		\vspace{-0.45mm}%
+		\ifstrequal{#1}{}{}{\normalsize{\scshape \textcolor{gregoriocolor}{#1}}\par}%
+		{\Large \plantinlighttitles{\par\uppercase{#2}\par}}%
+		\vspace{0.4mm}%
+		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
 	}{}
 	\ifstrequal{#5}{2}{
 		\needspace{6\baselineskip}%
-		\ifstrequal{#1}{}{}{\normalsize \textcolor{gregoriocolor}{#1}\par}%
+		\ifstrequal{#1}{}{}{\normalsize{\scshape \textcolor{gregoriocolor}{#1}}\par}%
+		\vspace{0.45mm}%
 		{\Large {#2}}\par%
 		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
 	}{}
 	\ifstrequal{#5}{3}{
 		\needspace{5\baselineskip}%
-		\ifstrequal{#1}{}{}{\normalsize \textcolor{gregoriocolor}{#1}\par}%
+		\ifstrequal{#1}{}{}{\normalsize{\scshape \textcolor{gregoriocolor}{#1}}\par}%
+		\vspace{0.25mm}%
 		{\large {#2}}\par%
 		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
 	}{}
