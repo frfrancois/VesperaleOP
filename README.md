@@ -170,7 +170,7 @@ Caractères spéciaux à copier-coller si votre clavier ne les a pas : æ œ Æ 
 
 Toutes les pièces sont labélisées automatiquement par leur code Hudelmaier (nom de fichier sans le `.gabc`)
 
-`\pageref{nom_label}` imprime le numéro de page de l'endroit où on a inséré `\label{nom_label}` (si `nom_label` est le code Hudelmaier d'une pièce, renvoie au début de la pièce)
+`\pageref{M-nom_label}` imprime le numéro de page de l'endroit où on a inséré `\label{nom_label}` (si `nom_label` est le code Hudelmaier d'une pièce, renvoie au début de la pièce)
 
 \scorename{nom_fichier} imprime le nom de la pièce référencée par `nom_fichier` (tel qu'il figure dans les en-têtes GABC)
 
