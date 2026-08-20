@@ -207,3 +207,23 @@ S'il reste des modifications non commitées, on recommence à `git add` jusqu'à
 Seules les commandes `git fetch` (ou `pull`) dans un sens, et `git push` dans l'autre, utilisent le réseau. Les autres sont purement locales.
 
 On peut enfin utiliser `git add --interactive` et sélectionner `patch` pour que le système nous fasse passer en revue individuellement toutes les modifications faites à un fichier, si on veut les séparer en plusieurs commits.
+
+### Cas particuliers d'emploi de Git
+
+Vous voulez annuler les modifications faites à un fichier et revenir à l'état du dernier commit ?
+
+`git checkout HEAD -- mon_fichier.tex`
+
+Vous voulez annuler toutes les modifications faites depuis le dernier commit et revenir à celui-ci ?
+
+`git reset --hard HEAD`
+
+Vous voulez intégrer les modifications faites par un autre, mais `git rebase origin/main` échoue car vous avez des modifications non-commitées, et vous ne voulez pas commiter ?
+
+`git stash` pour placer ces modifications sous le coude tout en revenant à l'état du dernier commit
+
+`git rebase origin/main`
+
+`git stash pop` pour ré-appliquer les modifications temporairement annulées par `git stash` sur le nouvel état du code. Attention, des conflits peuvent apparaître si vous aviez modifié des fichiers qui ont été mis à jour par le `rebase`.
+
+
