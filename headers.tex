@@ -417,20 +417,20 @@ end
 		\ifstrequal{#1}{}{}{\normalsize{\scshape \textcolor{gregoriocolor}{#1}}\par}%
 		{\Large \plantinlighttitles{\par\uppercase{#2}\par}}%
 		\vspace{0.4mm}%
-		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
+		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par\nopagebreak}%
 	}{}
 	\ifstrequal{#5}{2}{
-		\needspace{7\baselineskip}%
+		\needspace{8\baselineskip}%
 		\ifstrequal{#1}{}{}{\normalsize{\scshape \textcolor{gregoriocolor}{#1}}\par}%
 		\vspace{0.45mm}%
-		{\Large {#2}}\par%
-		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
+		{\Large {#2}}\par\nopagebreak%
+		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par\nopagebreak}%
 	}{}
 	\ifstrequal{#5}{3}{
-		\needspace{6\baselineskip}%
+		\needspace{7\baselineskip}%
 		\ifstrequal{#1}{}{}{{\noindent\makebox[0pt][l]{\large #1}}}%
-		\makebox[\textwidth][c]{\vtop{\hsize=.9\textwidth \large #2}}\par%
-		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
+		\makebox[\textwidth][c]{\vtop{\hsize=.9\textwidth \large #2}}\par\nopagebreak%
+		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par\nopagebreak}%
 	}{}
 	\end{center}
 	%% définition de l'en-tête de page
