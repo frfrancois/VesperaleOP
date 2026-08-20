@@ -127,6 +127,10 @@ luatexbase.add_to_callback("hpack_filter", fix_space_T, "fix_space_T_hpack")
 %% On emploie la règle dominicaine sur les altérations valables jusqu'à la fin de la ligne
 \gresetalterationeffect{line}
 
+%% On autorise les orphelins et les veuves, mais on décourage les veuves.
+\grechangecount{widowpenalty}{20}
+\grechangecount{clubpenalty}{-20}
+
 %% Variable globale contenant le nom de fichier de la pièce en train d'être imprimée, qui est aussi son label pour référence interne
 \global\def\labelbuffer{}
 %% Variable globale contenant le nom de l'index (A, H, R) pertinent pour la pièce en train d'être imprimée, s'il y en a un
@@ -434,6 +438,7 @@ end
 	}{}
 	\end{center}
 	%% définition de l'en-tête de page
+	\phantomsection
 	\setheader{#4}
 	%% si une date est indiquée, on indexe
 	\ifstrequal{#1}{}{}{\index[F]{#2}} %% pas beau: rajouter un argument pour le nom indexé de la fête, ou déduire ce nom en coupant S. devant
