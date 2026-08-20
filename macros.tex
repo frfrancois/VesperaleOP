@@ -63,7 +63,7 @@
 }
 
 %% Rubriques
-\newcommand{\rubrica}[1]{\textcolor{gregoriocolor}{{\footnotesize #1}}}
+\newcommand{\rubrica}[1]{\hspace*{0.04\textwidth}\textcolor{gregoriocolor}{{\footnotesize #1}}}
 
 %% Rubriques employées comme titre d'une pièce ("per annum" centré)
 \newcommand{\titulumrubrica}[1]{\needspace{5\baselineskip}\begin{center}\textsc{#1}\end{center}}
@@ -84,7 +84,7 @@
 	%% #1 : référence biblique
 	%% #2 : texte du capitule, avec \psstar et \pscross pour les astérisques et obèles
 	\needspace{3\baselineskip} % Pour assurer que le titre "Capitulum" n'est pas seul en bas de page
-	\hspace*{0.04\textwidth}%
+	\hspace*{0.04\textwidth}% retrait avant d'imprimer "capitulum". Voir aussi le retrait des rubriques.
 	\textcolor{gregoriocolor}{Capitulum}%
 	\hfill%
 	\textcolor{gregoriocolor}{#1}%
