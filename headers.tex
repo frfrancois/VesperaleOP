@@ -429,7 +429,7 @@ end
 	\ifstrequal{#5}{3}{
 		\needspace{6\baselineskip}%
 		\ifstrequal{#1}{}{}{{\noindent\makebox[0pt][l]{\large #1}}}%
-		\makebox[\textwidth][c]{\large #2}\par%
+		\makebox[\textwidth][c]{\vtop{\hsize=.9\textwidth \large #2}}\par%
 		\ifstrequal{#3}{}{}{\normalsize \textcolor{gregoriocolor}{#3}\par}%
 	}{}
 	\end{center}
