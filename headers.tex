@@ -154,7 +154,7 @@ luatexbase.add_to_callback("hpack_filter", fix_space_T, "fix_space_T_hpack")
   {}%
 }
 \newcommand{\officepartannotation}[1]{%
-  \global\def\indexnamebuffer{}%
+  \global\def\indexnamebuffer{NoIndex}%
   \abbrev{#1}{Antiphona}{A}%
   \abbrev{#1}{Hymnus}{H}%
   \abbrev{#1}{Responsorium breve}{R}%
