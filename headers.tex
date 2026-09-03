@@ -146,6 +146,78 @@ luatexbase.add_to_callback("hpack_filter", fix_space_T, "fix_space_T_hpack")
 %% Variable globale contenant le mode de la pièce en train d'être imprimée, pour l'ajouter à son entrée d'index.
 \global\def\indexedmode{}
 
+%% Cette commande remet à zéro le style des initiales après une modification de style (lettrine)
+\newcommand{\resetinitialstyle}{%
+	\gresetinitiallines{1}%
+	\grechangestyle{initial}{\begingroup\fontsize{40}{40}\selectfont}[\endgroup]%
+	\grechangedim{annotationraise}{\defaultannotationraise}{fixed}%
+}
+%% Appel des polices de lettrines avec les différents stylisticsets de SolesmesCaps
+\newfontfamily\solesmescaps[
+  Path = ./,
+  Extension = .ttf,
+  Ligatures = TeX,
+]{SolesmesCaps}
+\newfontfamily\descleeflora[
+  Path = ./,
+  Extension = .ttf,
+  Ligatures = TeX,
+]{DescleeFlora}
+\newfontfamily\solesmescapsround[
+  Path = ./,
+  Extension = .ttf,
+  Ligatures = TeX,
+  StylisticSet = {1} % ss01 = table ROUNDER-1
+]{SolesmesCaps}
+\newfontfamily\solesmescapsalt[
+  Path = ./,
+  Extension = .ttf,
+  Ligatures = TeX,
+  StylisticSet = {2} % ss02 = table VARIANTS-1
+]{SolesmesCaps}
+\newfontfamily\solesmescapsroundalt[
+  Path = ./,
+  Extension = .ttf,
+  Ligatures = TeX,
+  StylisticSet = {1, 3} % ss03 = table ROUNDERVARIANTS-1
+]{SolesmesCaps}
+\newfontfamily\solesmescapsspecial[
+  Path = ./,
+  Extension = .ttf,
+  Ligatures = TeX,
+  StylisticSet = {4} % ss04 = table SPECIFIC-1
+]{SolesmesCaps}
+%% Cette commande permet de modifier le niveau d'initiale de la prochaine pièce.
+\newcommand{\cantusilluminatio}[2][normal]{
+%% #1 (optionnel) : variante demandée pour la police d'initiales: "round", "alt", "roundalt", "special"
+%% #2: niveau d'initiale attendue. 1 => initiale ornée de hauteur 1 ligne. 2 => hauteur 2 lignes.
+	\ifstrequal{#2}{1}{%
+		\gresetinitiallines{1}%
+		\grechangestyle{initial}{\begingroup\descleeflora\fontsize{53}{53}\selectfont}[\endgroup]%
+		\grechangedim{annotationraise}{4.3mm}{fixed}%
+	}{}%
+	\ifstrequal{#2}{2}{%
+		\gresetinitiallines{2}%
+		\ifstrequal{#1}{normal}{%
+			\grechangestyle{initial}{\begingroup\solesmescaps\fontsize{125}{125}\selectfont}[\endgroup]%
+		}{}%
+		\ifstrequal{#1}{round}{%
+			\grechangestyle{initial}{\begingroup\solesmescapsround\fontsize{125}{125}\selectfont}[\endgroup]%
+		}{}%
+		\ifstrequal{#1}{alt}{%
+			\grechangestyle{initial}{\begingroup\solesmescapsalt\fontsize{125}{125}\selectfont}[\endgroup]%
+		}{}%
+		\ifstrequal{#1}{roundalt}{%
+			\grechangestyle{initial}{\begingroup\solesmescapsroundalt\fontsize{125}{125}\selectfont}[\endgroup]%
+		}{}%
+		\ifstrequal{#1}{special}{%
+			\grechangestyle{initial}{\begingroup\solesmescapsspecial\fontsize{125}{125}\selectfont}[\endgroup]%
+		}{}%
+		\grechangedim{annotationraise}{4mm}{fixed}%
+	}{}
+}
+
+
 %% Cette section prend un header office-part (Antiphona, etc.) détermine son index
 \newcommand{\abbrev}[3]{%
   \ifstrequal{#1}{#2}{%
@@ -252,7 +324,7 @@ end
   \setmainfont{Plantin MT Pro}[Scale=1] % changer cette valeur à 1.15 ou 1.20 pour augmenter la taille du texte des chants de 15% ou 20%
   \gregorioscore{gabc/#1}
   \setmainfont{Plantin MT Pro}[Scale=1]
-  \gresetinitiallines{1}
+  \resetinitialstyle
 }
 
 \newcommand{\cantus}[3][no-override]{
@@ -266,12 +338,14 @@ end
   \setmainfont{Plantin MT Pro}[Scale=1] % changer cette valeur à 1.15 ou 1.20 pour augmenter la taille du texte des chants de 15% ou 20%
   \gregorioscore{gabc/#2}
   \setmainfont{Plantin MT Pro}[Scale=1]
+  \resetinitialstyle
 }
 
 %%%%%% Géométrie des annotations
 
 \grechangestyle{annotation}{\footnotesize}
-\grechangedim{annotationraise}{0mm}{fixed}
+\newcommand{\defaultannotationraise}{0mm}
+\grechangedim{annotationraise}{\defaultannotationraise}{fixed}
 
 
 %%%%%%%%%%%%%%% COLUMN MANAGEMENT %%%%%%%%%%%%%%%
