@@ -1,0 +1,33 @@
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8
+
+\documentclass[12pt, twoside, french, openany]{book}
+\input{headers}
+
+\begin{document}
+
+Lettrines niveau 1
+
+{\begingroup\descleeflora\fontsize{53}{53}\selectfont A B C D E F G H I J L M N O P Q R S T U V Z Æ\endgroup}
+
+Lettrines niveau 2 sans option
+
+{\begingroup\solesmescaps\fontsize{125}{125}\selectfont ABC DEF GHI JLM NOP QRS TUV ZÆ\endgroup}
+
+Lettrines niveau 2 option «round»
+
+{\begingroup\solesmescapsround\fontsize{125}{125}\selectfont ABC DEF GHI JLM NOP QRS TUV\endgroup}
+
+Lettrines niveau 2 option «alt»
+
+{\begingroup\solesmescapsalt\fontsize{125}{125}\selectfont A C I P S\endgroup}
+
+Lettrines niveau 2 option «roundalt»
+
+{\begingroup\solesmescapsroundalt\fontsize{125}{125}\selectfont E T\endgroup}
+
+Lettrines niveau 2 option «special»
+
+{\begingroup\solesmescapsspecial\fontsize{125}{125}\selectfont A D E V\endgroup}
+
+\end{document}
